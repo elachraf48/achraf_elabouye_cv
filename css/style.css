@@ -15,8 +15,10 @@
 .navbar-brand{
     text-transform: uppercase;
     font-family: var(--poppins);
-    font-size: 1.7rem;
+    font-size: 1.2rem;
     font-weight: 800;
+    width: 120px;
+    color: chartreuse;
 }
 .navbar-toggler{
     border: none;
