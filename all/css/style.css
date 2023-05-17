@@ -830,3 +830,70 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+@property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+  }
+  
+  
+  .card {
+
+    position: relative;
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    cursor: pointer;
+  }
+  
+  .card:hover {
+    color: rgb(88 199 250 / 100%);
+    transition: color 1s;
+  }
+  .card:hover:before, .card:hover:after {
+    animation: none;
+    opacity: 0;
+  }
+  
+  
+  .card::before {
+    content: "";
+    width: 101.5%;
+    height: 101.5%;
+    border-radius: 8px;
+    background-image: linear-gradient(
+      var(--rotate)
+      , #0adf5c, #7fdf02 43%, #649623);
+      position: absolute;
+      z-index: -1;
+      top: -0.75%;
+      left: -0.75%;
+      animation: spin 6.5s linear infinite;
+  }
+  
+  .card::after {
+    position: absolute;
+    content: "";
+    top: calc(var(--card-height) / 6);
+    z-index: -1;
+    transform: scale(0.8);
+    filter: blur(calc(var(--card-height) / 6));
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff, #7fdf02 4%, #4e00c2);
+      opacity: 1;
+    transition: opacity .5s;
+    animation: spin 5.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      --rotate: 0deg;
+    }
+    100% {
+      --rotate: 360deg;
+    }
+  }
+  
