@@ -24,7 +24,7 @@ function downloadCV() {
     link.href = './assets/cv.pdf';
   
     // Set the download attribute with the desired file name
-    link.download = 'your-cv.pdf';
+    link.download = 'achraf-elabouye-cv.pdf';
   
     // Simulate a click on the anchor element to start the download
     link.click();
