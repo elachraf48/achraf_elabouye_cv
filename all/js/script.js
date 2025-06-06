@@ -46,8 +46,8 @@ const client = smtpjs.createClient({
   port: 465,
   secure: true,
   auth: {
-    user: "achraf.abwi@gmail.com",
-    password: "azhxrnmaqdeiyuqm",
+    user: "user.user2@gmail.com",
+    password: "password",
   },
 });
 
@@ -55,8 +55,8 @@ const client = smtpjs.createClient({
 const sendEmail = ( subject, body) => {
   // Create a new SMTPJS message
   const message = smtpjs.createMessage({
-    to : "achrafelabouye@gmail.com",
-    from :"achraf.abwi@gmail.com",
+    to : "user@gmail.com",
+    from :"user.user@gmail.com",
     subject,
     body,
   });
