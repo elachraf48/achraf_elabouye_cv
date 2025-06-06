@@ -1,10 +1,43 @@
-
 const navBtn = document.querySelector('#navbar-toggler');
 const navDiv = document.querySelector('.navbar-collapse');
 
+// Toggle menu visibility
 navBtn.addEventListener('click', () => {
-    navDiv.classList.toggle('showNav');
+  navDiv.classList.toggle('showNav');
+  navBtn.setAttribute('aria-expanded', navDiv.classList.contains('showNav'));
 });
+
+// Close menu when clicking on nav links
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    navDiv.classList.remove('showNav');
+    navBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', e => {
+  const isClickInside = navDiv.contains(e.target) || navBtn.contains(e.target);
+  
+  if (!isClickInside && navDiv.classList.contains('showNav')) {
+    navDiv.classList.remove('showNav');
+    navBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+// Close menu with Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && navDiv.classList.contains('showNav')) {
+    navDiv.classList.remove('showNav');
+    navBtn.setAttribute('aria-expanded', 'false');
+  }
+});
+// const navBtn = document.querySelector('#navbar-toggler');
+// const navDiv = document.querySelector('.navbar-collapse');
+
+// navBtn.addEventListener('click', () => {
+//     navDiv.classList.toggle('showNav');
+// });
 
 // stopping animation and transition during window resizing
 let resizeTimer;
