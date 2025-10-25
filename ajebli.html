@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculation Tool</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <div class="container py-5">
+    <div class="card shadow-lg rounded-4">
+      <div class="card-body p-5">
+
+        <h2 class="text-center mb-4">📘 Calculation Tool</h2>
+
+        <!-- Step 1: Select which solution -->
+        <div class="mb-4">
+          <label class="form-label fw-bold">Select Calculation:</label>
+          <select id="calcType" class="form-select" onchange="showCalculationForm()">
+            <option value="">-- Choose one --</option>
+            <option value="growth">Growth Rate (k)</option>
+            <!-- Future calculations can be added here -->
+          </select>
+        </div>
+
+        <!-- Step 2: Calculation form area -->
+        <div id="calcFormContainer"></div>
+
+        <!-- Step 3: Result display -->
+        <div id="result" class="alert mt-4 d-none"></div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS -->
+  <script>
+    function showCalculationForm() {
+      const type = document.getElementById("calcType").value;
+      const container = document.getElementById("calcFormContainer");
+      const resultDiv = document.getElementById("result");
+      resultDiv.classList.add("d-none");
+
+      if (type === "growth") {
+        container.innerHTML = `
+          <h4 class="text-primary mb-3">📈 Growth Rate (k) Calculator</h4>
+          <form id="growthForm" class="row g-3">
+            <div class="col-md-6">
+              <label for="p0" class="form-label">Initial Value (P₀)</label>
+              <input type="number" class="form-control" id="p0" required>
+            </div>
+            <div class="col-md-6">
+              <label for="pm" class="form-label">Final Value (Pₘ)</label>
+              <input type="number" class="form-control" id="pm" required>
+            </div>
+            <div class="col-md-6">
+              <label for="t0" class="form-label">Initial Year (t₀)</label>
+              <input type="number" class="form-control" id="t0" required>
+            </div>
+            <div class="col-md-6">
+              <label for="tm" class="form-label">Final Year (tₘ)</label>
+              <input type="number" class="form-control" id="tm" required>
+            </div>
+            <div class="col-12 text-center mt-3">
+              <button type="button" class="btn btn-success btn-lg" onclick="calculateGrowthRate()">Calculate</button>
+            </div>
+          </form>
+        `;
+      } else {
+        container.innerHTML = "";
+      }
+    }
+
+    function calculateGrowthRate() {
+      const P0 = parseFloat(document.getElementById('p0').value);
+      const Pm = parseFloat(document.getElementById('pm').value);
+      const t0 = parseFloat(document.getElementById('t0').value);
+      const tm = parseFloat(document.getElementById('tm').value);
+      const resultDiv = document.getElementById('result');
+
+      if (isNaN(P0) || isNaN(Pm) || isNaN(t0) || isNaN(tm) || P0 <= 0 || Pm <= 0 || tm === t0) {
+        resultDiv.classList.remove('d-none', 'alert-info');
+        resultDiv.classList.add('alert-danger');
+        resultDiv.innerHTML = '⚠️ Please enter valid numbers!';
+        return;
+      }
+
+      const k = Math.log(Pm / P0) / (tm - t0);
+
+      // Show detailed steps
+      resultDiv.classList.remove('d-none', 'alert-danger');
+      resultDiv.classList.add('alert-info');
+      resultDiv.innerHTML = `
+        <h5 class="fw-bold mb-3">🧮 Step-by-Step Calculation</h5>
+        <p><strong>Formula:</strong> k = ln(Pₘ / P₀) / (tₘ - t₀)</p>
+        <p><strong>Step 1:</strong> ln(${Pm} / ${P0}) = ln(${(Pm / P0).toFixed(5)}) = ${(Math.log(Pm / P0)).toFixed(5)}</p>
+        <p><strong>Step 2:</strong> tₘ - t₀ = ${tm} - ${t0} = ${tm - t0}</p>
+        <p><strong>Step 3:</strong> k = ${(Math.log(Pm / P0)).toFixed(5)} / ${tm - t0} = <strong>${k.toFixed(5)}</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>
