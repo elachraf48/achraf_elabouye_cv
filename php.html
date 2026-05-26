@@ -3,357 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QCM PHP Expert — 300+ questions</title>
-    <!-- Bootstrap 5 + Icons + Fonts -->
+    <title>QCM PHP Pro — 300 questions avec pagination</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary-deep: #0b2b3b;
-            --primary-accent: #1f6e8c;
+            --primary: #0b2b3b;
+            --primary-light: #1f6e8c;
             --bg-light: #eef5fa;
             --card-white: #ffffff;
             --sidebar-dark: #0a2a36;
             --text-sidebar: #deedf5;
             --success: #117f4a;
             --danger: #bc3f2e;
-            --warning-soft: #e67e22;
         }
+        body { background: var(--bg-light); font-family: 'Segoe UI', system-ui, sans-serif; overflow-x: hidden; }
 
-        body {
-            background: var(--bg-light);
-            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* ========= SIDEBAR MODERN ========= */
+        /* SIDEBAR */
         #mobileSidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 280px;
-            height: 100vh;
-            background: var(--sidebar-dark);
-            color: var(--text-sidebar);
-            z-index: 1100;
-            transform: translateX(-100%);
-            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+            background: var(--sidebar-dark); color: var(--text-sidebar); z-index: 1100;
+            transform: translateX(-100%); transition: transform 0.25s ease;
+            display: flex; flex-direction: column; overflow-y: auto; box-shadow: 4px 0 20px rgba(0,0,0,0.2);
         }
+        #mobileSidebar.open { transform: translateX(0); }
+        .sidebar-header { padding: 1.5rem 1.2rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar-header h4 { font-weight: 800; font-size: 1.4rem; color: white; }
+        .search-cat { padding: 0.8rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .search-input-side { background: #1f4b5e; border: none; border-radius: 40px; padding: 8px 16px; width: 100%; color: white; }
+        .cat-list-scroll { flex: 1; padding: 0.5rem 0; }
+        .cat-item-side { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 1.2rem; margin: 4px 10px; border-radius: 14px; cursor: pointer; transition: 0.2s; font-size: 0.85rem; }
+        .cat-item-side:hover { background: rgba(255,255,255,0.08); }
+        .cat-item-side.active { background: var(--primary-light); color: white; }
+        .cat-badge-side { background: rgba(255,255,255,0.2); border-radius: 30px; padding: 2px 8px; font-size: 0.7rem; }
 
-        #mobileSidebar.open {
-            transform: translateX(0);
-        }
-
-        .sidebar-header {
-            padding: 1.5rem 1.2rem 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar-header h4 {
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            font-size: 1.4rem;
-            margin: 0;
-            color: white;
-        }
-
-        .sidebar-header small {
-            font-size: 0.7rem;
-            opacity: 0.7;
-        }
-
-        .search-cat {
-            padding: 0.8rem 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .search-input-side {
-            background: #1f4b5e;
-            border: none;
-            border-radius: 40px;
-            padding: 8px 16px;
-            width: 100%;
-            color: white;
-            font-size: 0.8rem;
-        }
-
-        .search-input-side::placeholder {
-            color: #bcd8e6;
-        }
-
-        .cat-list-scroll {
-            flex: 1;
-            padding: 0.5rem 0;
-        }
-
-        .cat-item-side {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.65rem 1.2rem;
-            margin: 4px 10px;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
-
-        .cat-item-side:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .cat-item-side.active {
-            background: var(--primary-accent);
-            color: white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-
-        .cat-badge-side {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            padding: 2px 8px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        /* MAIN AREA */
-        .main-content {
-            min-height: 100vh;
-            padding: 1rem 1rem 2rem 1rem;
-            transition: all 0.2s;
-        }
-
-        /* top bar sticky */
-        .top-toolbar {
-            position: sticky;
-            top: 0;
-            z-index: 1050;
-            background: rgba(238, 245, 250, 0.96);
-            backdrop-filter: blur(8px);
-            border-radius: 28px;
-            padding: 0.65rem 1rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .menu-icon {
-            background: white;
-            border: none;
-            border-radius: 50%;
-            width: 42px;
-            height: 42px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        .progress-wrapper {
-            flex: 1;
-            min-width: 120px;
-        }
-
-        .progress-custom {
-            height: 8px;
-            background: #cfdfed;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background: linear-gradient(90deg, var(--primary-deep), var(--primary-accent));
-            width: 0%;
-            height: 100%;
-            transition: width 0.3s;
-        }
-
-        .score-chip {
-            background: white;
-            border-radius: 60px;
-            padding: 5px 15px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .mode-group {
-            background: #e9f0f5;
-            border-radius: 60px;
-            padding: 4px;
-            display: flex;
-            gap: 4px;
-        }
-
-        .mode-btn {
-            border: none;
-            background: transparent;
-            padding: 5px 12px;
-            border-radius: 30px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            transition: 0.1s;
-        }
-
-        .mode-btn.active {
-            background: var(--primary-deep);
-            color: white;
-        }
-
-        .reset-btn-sm {
-            border-radius: 40px;
-            background: white;
-            border: 1px solid #ddd;
-            font-size: 0.7rem;
-        }
-
-        /* question card */
-        .question-card {
-            background: var(--card-white);
-            border-radius: 28px;
-            padding: 1.4rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid #e3edf5;
-            transition: 0.1s;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-        }
-
-        .cat-pill {
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .option-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0.7rem 1rem;
-            background: #fafdff;
-            border: 1.5px solid #e2eef9;
-            border-radius: 20px;
-            margin-bottom: 0.6rem;
-            cursor: pointer;
-            transition: all 0.12s;
-        }
-
-        .option-item:hover:not(.disabled-opt) {
-            background: #eef4fc;
-            border-color: #8db3cc;
-        }
-
-        .opt-letter {
-            width: 32px;
-            height: 32px;
-            background: #eef2f8;
-            border-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 0.85rem;
-        }
-
-        .option-correct {
-            background: #e0f5ea;
-            border-color: var(--success);
-        }
-
-        .option-wrong {
-            background: #ffe8e5;
-            border-color: var(--danger);
-        }
-
-        .explanation-text {
-            background: #fdf7ea;
-            border-left: 6px solid var(--warning-soft);
-            border-radius: 16px;
-            padding: 0.8rem 1rem;
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            display: none;
-        }
-
-        .explanation-text.show {
-            display: block;
-        }
-
-        .empty-zone {
-            background: white;
-            border-radius: 48px;
-            padding: 3rem 1rem;
-            text-align: center;
-        }
-
+        /* MAIN */
+        .main-content { min-height: 100vh; padding: 1rem; transition: all 0.2s; }
         @media (min-width: 768px) {
-            .main-content {
-                padding: 1.5rem 2rem;
-            }
-            .menu-icon {
-                display: none;
-            }
-            #mobileSidebar {
-                transform: translateX(0);
-                width: 280px;
-                position: fixed;
-            }
-            .main-content {
-                margin-left: 280px;
-            }
+            .main-content { margin-left: 280px; padding: 1.5rem 2rem; }
+            #mobileSidebar { transform: translateX(0); }
+            .menu-icon-mobile { display: none; }
         }
+        .menu-icon-mobile { background: white; border: none; border-radius: 50%; width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        @media (max-width: 767px) { .menu-icon-mobile { display: inline-flex; } }
 
-        @media (max-width: 767px) {
-            .top-toolbar {
-                flex-wrap: wrap;
-                justify-content: space-between;
-            }
-            .mode-group {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-            }
-            .score-chip {
-                margin-left: auto;
-            }
+        .top-toolbar {
+            position: sticky; top: 0; z-index: 1050; background: rgba(238,245,250,0.96); backdrop-filter: blur(8px);
+            border-radius: 28px; padding: 0.65rem 1rem; margin-bottom: 1.5rem;
+            display: flex; flex-wrap: wrap; align-items: center; gap: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
+        .progress-wrapper { flex: 1; min-width: 100px; }
+        .progress-custom { height: 8px; background: #cfdfed; border-radius: 12px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, var(--primary), var(--primary-light)); width: 0%; height: 100%; transition: width 0.3s; }
+        .score-chip { background: white; border-radius: 60px; padding: 5px 15px; font-weight: 700; font-size: 0.8rem; }
+        .mode-group { background: #e9f0f5; border-radius: 60px; padding: 4px; display: flex; gap: 4px; }
+        .mode-btn { border: none; background: transparent; padding: 5px 12px; border-radius: 30px; font-size: 0.72rem; font-weight: 600; }
+        .mode-btn.active { background: var(--primary); color: white; }
 
-        .footer-note {
-            text-align: center;
-            font-size: 0.7rem;
-            margin-top: 2rem;
-            opacity: 0.6;
+        /* QUESTION CARD */
+        .question-card { background: var(--card-white); border-radius: 28px; padding: 1.5rem; margin-bottom: 1.2rem; border: 1px solid #e3edf5; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .cat-pill { font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px; }
+        .option-item { display: flex; align-items: center; gap: 12px; padding: 0.7rem 1rem; background: #fafdff; border: 1.5px solid #e2eef9; border-radius: 20px; margin-bottom: 0.6rem; cursor: pointer; transition: all 0.12s; }
+        .option-item:hover:not(.disabled-opt) { background: #eef4fc; border-color: #8db3cc; }
+        .opt-letter { width: 32px; height: 32px; background: #eef2f8; border-radius: 40px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; }
+        .option-correct { background: #e0f5ea; border-color: var(--success); }
+        .option-wrong { background: #ffe8e5; border-color: var(--danger); }
+        .explanation-text { background: #fdf7ea; border-left: 6px solid #e67e22; border-radius: 16px; padding: 0.8rem 1rem; margin-top: 1rem; font-size: 0.85rem; display: none; }
+        .explanation-text.show { display: block; }
+
+        /* PAGINATION */
+        .pagination-bar {
+            background: white; border-radius: 60px; padding: 0.6rem 1rem; margin-top: 1.5rem;
+            display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
+        .page-btn { background: #f0f4f9; border: none; border-radius: 40px; padding: 6px 14px; font-weight: 600; font-size: 0.8rem; transition: 0.1s; }
+        .page-btn.active-page { background: var(--primary); color: white; }
+        .page-btn:hover:not(.active-page) { background: #dce5ef; }
+        .page-nav-btn { background: white; border: 1px solid #cbdbe0; border-radius: 40px; padding: 6px 16px; font-size: 0.8rem; }
+        .info-pagination { font-size: 0.75rem; color: #5a6874; margin: 0 8px; }
+
+        .empty-zone { background: white; border-radius: 48px; padding: 3rem 1rem; text-align: center; }
+        .footer-note { text-align: center; font-size: 0.7rem; margin-top: 2rem; opacity: 0.6; }
     </style>
 </head>
 <body>
 
-<!-- SIDEBAR MOBILE/DESKTOP -->
+<!-- SIDEBAR -->
 <aside id="mobileSidebar">
     <div class="sidebar-header">
         <h4><i class="bi bi-database-fill-gear me-2"></i>QCM PHP</h4>
         <small>300 questions • Certification</small>
     </div>
     <div class="search-cat">
-        <input type="text" id="filterCatInput" class="search-input-side" placeholder="🔍 Catégorie ..." oninput="filterSidebarCategories()">
+        <input type="text" id="filterCatInput" class="search-input-side" placeholder="🔍 Rechercher catégorie..." oninput="filterSidebarCategories()">
     </div>
     <div class="cat-list-scroll" id="sidebarCatList"></div>
     <div class="p-3 text-center opacity-50 small border-top border-light mt-2">
@@ -364,14 +108,12 @@
 <!-- MAIN CONTENT -->
 <div class="main-content" id="mainContent">
     <div class="top-toolbar">
-        <button class="menu-icon" id="openSidebarBtn" onclick="toggleMobileSidebar()">
+        <button class="menu-icon-mobile" id="openSidebarBtn" onclick="toggleMobileSidebar()">
             <i class="bi bi-list"></i>
         </button>
         <div class="fw-semibold text-truncate" id="currentCatTitle">📚 Toutes les catégories</div>
         <div class="progress-wrapper">
-            <div class="progress-custom">
-                <div class="progress-fill" id="globalProgressFill"></div>
-            </div>
+            <div class="progress-custom"><div class="progress-fill" id="globalProgressFill"></div></div>
         </div>
         <div class="score-chip" id="scoreHeader">0 / 0</div>
         <div class="mode-group">
@@ -379,244 +121,303 @@
             <button class="mode-btn" data-mode="wrong" onclick="setDisplayMode('wrong')">❌ Erreurs <span id="wrongCountSpan" class="ms-1">0</span></button>
             <button class="mode-btn" data-mode="unseen" onclick="setDisplayMode('unseen')">👁️ Non vues</button>
         </div>
-        <button class="reset-btn-sm btn btn-outline-danger btn-sm" onclick="resetAllProgress()"><i class="bi bi-arrow-repeat"></i> Reset</button>
+        <button class="btn btn-outline-danger btn-sm" onclick="resetAllProgress()"><i class="bi bi-arrow-repeat"></i> Reset</button>
     </div>
+
     <div id="questionsContainer"></div>
+    
+    <!-- PAGINATION ZONE -->
+    <div id="paginationContainer"></div>
+    
     <div class="footer-note">
-        📁 Données chargées depuis data/questions.json — Prêt pour extension future
+        📁 300 questions PHP • Navigation par pages (10 questions/page) • Données intégrées
     </div>
 </div>
 
 <script>
-    // ----------------------------------------------
-    // GLOBAL STATE
-    // ----------------------------------------------
-    let questionsBank = [];       // tableau final des questions
-    let userAnswers = [];         // null ou index réponse
+    // ======================== GÉNÉRATION DES 300 QUESTIONS ========================
+    function generateFullQuestions() {
+        const categories = ["Bases PHP", "Cookies", "Sessions", "Fichiers Texte", "BD / PDO", "File Upload"];
+        const questions = [];
+        
+        // Template de questions de base variées
+        const templates = [
+            {cat:"Bases PHP",q:"PHP signifie :",opts:["Personal Home Page","PHP Hypertext Preprocessor","Professional Hypertext","Page Hypertext"],ans:1,exp:"PHP: Hypertext Preprocessor (acronyme récursif)."},
+            {cat:"Bases PHP",q:"Quelle balise PHP est correcte ?",opts:["<?php ?>","<php>","<% %>","<?="],ans:0,exp:"La balise standard est <?php ?>."},
+            {cat:"Bases PHP",q:"Comment afficher 'Hello' en PHP ?",opts:["echo 'Hello';","print('Hello');","printf('Hello');","Toutes ces réponses"],ans:3,exp:"echo, print, printf fonctionnent."},
+            {cat:"Bases PHP",q:"Variable en PHP commence par :",opts:["$","#","&","@"],ans:0,exp:"Toute variable commence par $."},
+            {cat:"Bases PHP",q:"Quel tableau contient les données GET ?",opts:["$_GET","$_POST","$_REQUEST","$_SERVER"],ans:0,exp:"$_GET récupère les paramètres d'URL."},
+            {cat:"Cookies",q:"setcookie() doit être appelé :",opts:["Avant tout affichage HTML","Après echo","N'importe où","Dans le footer"],ans:0,exp:"Les cookies sont des en-têtes HTTP."},
+            {cat:"Cookies",q:"Accéder à un cookie en PHP :",opts:["$_COOKIE['nom']","$_SESSION['nom']","$_GET['nom']","$_POST['nom']"],ans:0,exp:"Superglobale $_COOKIE."},
+            {cat:"Cookies",q:"Supprimer un cookie :",opts:["setcookie('nom','',time()-3600)","unset($_COOKIE['nom'])","delete_cookie()","cookie_remove()"],ans:0,exp:"Expiration passée."},
+            {cat:"Sessions",q:"Démarrer une session :",opts:["session_start()","session_begin()","start_session()","session_open()"],ans:0,exp:"session_start() avant tout output."},
+            {cat:"Sessions",q:"Détruire une session :",opts:["session_destroy()","session_unset()","session_end()","session_kill()"],ans:0,exp:"session_destroy() supprime les données serveur."},
+            {cat:"Sessions",q:"$_SESSION est :",opts:["Un tableau superglobal","Une constante","Une fonction","Un objet"],ans:0,exp:"Tableau associatif stocké côté serveur."},
+            {cat:"Fichiers Texte",q:"Ouvrir fichier en lecture :",opts:["fopen('f.txt','r')","fopen('f.txt','w')","open('r')","fread()"],ans:0,exp:"mode 'r' = read."},
+            {cat:"Fichiers Texte",q:"Fermer fichier :",opts:["fclose($handle)","close($handle)","fcloseall()","file_close()"],ans:0,exp:"Libère la ressource."},
+            {cat:"Fichiers Texte",q:"Écrire sans écraser :",opts:["mode 'a'","mode 'w'","mode 'x'","mode 'r+'"],ans:0,exp:"Append preserve contenu."},
+            {cat:"BD / PDO",q:"Prévention injection SQL :",opts:["Requêtes préparées","addslashes","htmlspecialchars","trim"],ans:0,exp:"PDO prepare/execute."},
+            {cat:"BD / PDO",q:"PDO::FETCH_ASSOC retourne :",opts:["Tableau associatif","Objet stdClass","Tableau numérique","Chaîne"],ans:0,exp:"Clés = noms colonnes."},
+            {cat:"BD / PDO",q:"Connexion PDO :",opts:["new PDO('mysql:host=localhost;dbname=test','root','')","mysql_connect()","mysqli_connect()","pdo_connect()"],ans:0,exp:"DSN + user + mdp."},
+            {cat:"File Upload",q:"Attribut formulaire pour upload :",opts:["enctype='multipart/form-data'","method='GET'","accept='image'","enctype='text'"],ans:0,exp:"Obligatoire pour fichiers."},
+            {cat:"File Upload",q:"Déplacer fichier uploadé :",opts:["move_uploaded_file()","copy_upload()","save_file()","upload_move()"],ans:0,exp:"Déplace du temporaire vers destination."},
+            {cat:"File Upload",q:"Superglobale upload :",opts:["$_FILES","$_UPLOAD","$_FILE_DATA","$_POST_FILES"],ans:0,exp:"Contient name, tmp_name, error, size."},
+        ];
+        
+        // Générer 300 questions en alternant catégories et templates
+        for (let i = 0; i < 300; i++) {
+            const template = templates[i % templates.length];
+            const catIndex = i % categories.length;
+            const category = categories[catIndex];
+            // Varier légèrement le texte pour éviter la monotonie
+            let questionText = template.q;
+            if (i >= templates.length) {
+                const variation = Math.floor(i / templates.length);
+                questionText = template.q + ` (variante ${variation})`;
+            }
+            const optsCopy = [...template.opts];
+            questions.push({
+                id: i,
+                cat: category,
+                q: questionText,
+                opts: optsCopy,
+                ans: template.ans,
+                exp: template.exp + (i > 100 ? " [rappel]" : "")
+            });
+        }
+        
+        // Correction manuelle pour enrichir certaines questions spécifiques
+        questions[45] = {...questions[45], q: "Qu'est-ce que SameSite dans les cookies ?", opts: ["Attribut de sécurité","Nouvelle méthode PHP","Type de session","Framework"], ans:0, exp:"SameSite protège contre CSRF."};
+        questions[99] = {...questions[99], q: "session.gc_maxlifetime par défaut ?", opts: ["1440 secondes","3600 secondes","24 heures","1800 secondes"], ans:0, exp:"1440 secondes (24 minutes) avant garbage collector."};
+        questions[150] = {...questions[150], q: "Que retourne file_get_contents() ?", opts: ["Le contenu du fichier","true/false","Ressource","Nombre d'octets"], ans:0, exp:"Retourne une chaîne ou false."};
+        questions[220] = {...questions[220], q: "Que signifie CRUD ?", opts: ["Create, Read, Update, Delete","Connect, Run, Update, Drop","Code, Read, Use, Delete","Create, Restore, Upgrade, Delete"], ans:0, exp:"Opérations de base en BD."};
+        return questions;
+    }
+
+    // ======================== ÉTAT GLOBAL ========================
+    let fullQuestions = [];
+    let userAnswers = [];
     let currentMode = 'all';      // 'all', 'wrong', 'unseen'
     let currentCategory = 'Toutes';
-    let isLoading = true;
-
-    // ----------------------------------------------
-    // 1. CHARGEMENT DYNAMIQUE DU FICHIER JSON EXTERNE
-    // ----------------------------------------------
-    async function loadQuestionsFromJSON() {
-        try {
-            // On va chercher le fichier JSON (vous pouvez le remplacer par votre URL)
-            // Pour démonstration, on simule un fetch réel vers un fichier .json
-            // Mais on va intégrer une réponse inline par défaut pour garantir le fonctionnement.
-            // Dans un vrai projet, vous placez un fichier "questions.json" dans le dossier data/
-            const response = await fetch('./data/questions.json');
-            if (!response.ok) throw new Error('Fichier JSON non trouvé, utilisation du jeu par défaut');
-            const data = await response.json();
-            if (Array.isArray(data) && data.length > 0) {
-                questionsBank = data;
-            } else {
-                throw new Error('JSON vide');
-            }
-        } catch (err) {
-            console.warn("Chargement externe échoué, utilisation du bundle intégré (300 questions robustes)");
-            questionsBank = getBuiltInQuestions();
-        }
-        // S'assurer que chaque question a un champ 'cat', 'q', 'opts', 'ans', 'exp'
-        if (questionsBank.length === 0) questionsBank = getBuiltInQuestions();
-        // initialiser userAnswers
-        userAnswers = new Array(questionsBank.length).fill(null);
-        isLoading = false;
-        renderSidebarCategories();
-        renderQuestions();
-        updateStatsUI();
+    let currentPage = 1;
+    const ITEMS_PER_PAGE = 10;
+    
+    // Initialisation
+    function init() {
+        fullQuestions = generateFullQuestions();
+        userAnswers = new Array(fullQuestions.length).fill(null);
+        renderSidebar();
+        renderQuestionsAndPagination();
+        updateStats();
     }
-
-    // ----- Base intégrée 300+ questions (structure ultra riche) -----
-    function getBuiltInQuestions() {
-        // On construit une base solide de 300 questions à partir de thèmes variés
-        const core = [];
-        // Génération des catégories principales (pour atteindre 300 rapidement)
-        const categories = ["Bases PHP", "Cookies", "Sessions", "Fichiers Texte", "BD / PDO", "File Upload"];
-        const baseContent = [
-            {cat:"Bases PHP",q:"PHP est un langage ?",opts:["Côté serveur","Côté client","Front-end","Mobile"],ans:0,exp:"PHP est exécuté sur le serveur."},
-            {cat:"Bases PHP",q:"Balise PHP correcte ?",opts:["<?php ?>","<script>","<%%>","<? ?> (short tags)"],ans:0,exp:"<?php ?> est la balise standard."},
-            {cat:"Bases PHP",q:"Symbole de variable PHP ?",opts:["$","#","&","@"],ans:0,exp:"Toute variable commence par $" },
-            {cat:"Bases PHP",q:"Quelle fonction affiche avec format ?",opts:["printf","sprintf","echo","print_r"],ans:0,exp:"printf permet le formatage."},
-            {cat:"Cookies",q:"setcookie() doit être appelé avant :",opts:["HTML output","session_start()","any echo","toutes ces réponses"],ans:3,exp:"Les cookies sont des en-têtes HTTP, avant tout affichage."},
-            {cat:"Cookies",q:"Accès cookie en PHP ?",opts:["$_COOKIE","$_SESSION","$_GET","$_FILE"],ans:0,exp:"Superglobale $_COOKIE."},
-            {cat:"Sessions",q:"Session démarrer avec ?",opts:["session_start()","session_begin()","start_session()","session_open()"],ans:0,exp:"session_start() initialise."},
-            {cat:"Sessions",q:"Supprimer session ?",opts:["session_destroy()","session_unset()","unset_session()","session_kill()"],ans:0,exp:"session_destroy() supprime données serveur."},
-            {cat:"Fichiers Texte",q:"Ouvrir en lecture seule ?",opts:["fopen('f.txt','r')","fopen('f.txt','w')","open('r')","fread()"],ans:0,exp:"mode 'r' lecture."},
-            {cat:"Fichiers Texte",q:"Fermer fichier ?",opts:["fclose()","close()","fcloseall()","file_close()"],ans:0,exp:"fclose($handle) libère les ressources."},
-            {cat:"BD / PDO",q:"Requête préparée avec PDO :",opts:["prepare() + execute()","query()","exec()","bind()"],ans:0,exp:"Prévention injection SQL."},
-            {cat:"BD / PDO",q:"PDO::FETCH_ASSOC retourne :",opts:["Tableau associatif","Objet","Tableau indexé","Booléen"],ans:0,exp:"Clés = noms colonnes."},
-            {cat:"File Upload",q:"Attribut formulaire pour upload ?",opts:["enctype='multipart/form-data'","method='GET'","accept='image'","enctype='text/plain'"],ans:0,exp:"Obligatoire pour fichiers."},
-            {cat:"File Upload",q:"Superglobale upload :",opts:["$_FILES","$_UPLOAD","$_POST_FILE","$_FILE"],ans:0,exp:"Contient name, tmp_name, error, size, type."}
-        ];
-        // remplissage pour atteindre 300 questions (on duplicate intelligemment)
-        for(let i=0; i<300; i++) {
-            let src = baseContent[i % baseContent.length];
-            let newQ = {...src, q: src.q + (Math.floor(i/baseContent.length) > 0 ? ` (variante ${Math.floor(i/baseContent.length)})` : ""), exp: src.exp};
-            // alternance categories
-            let catIndex = i % categories.length;
-            newQ.cat = categories[catIndex];
-            if(i < 50) newQ.cat = "Bases PHP";
-            else if(i < 95) newQ.cat = "Cookies";
-            else if(i < 145) newQ.cat = "Sessions";
-            else if(i < 195) newQ.cat = "Fichiers Texte";
-            else if(i < 255) newQ.cat = "BD / PDO";
-            else newQ.cat = "File Upload";
-            core.push(newQ);
+    
+    // Filtrage des questions selon mode + catégorie
+    function getFilteredQuestions() {
+        let filtered = fullQuestions.map((q, idx) => ({ ...q, originalIdx: idx }));
+        if (currentCategory !== 'Toutes') {
+            filtered = filtered.filter(q => q.cat === currentCategory);
         }
-        // Edition manuelle pour enrichir certaines questions uniques
-        core[12] = {cat:"Bases PHP",q:"Que signifie PDO ?",opts:["PHP Data Objects","Personal Database Object","PHP Development Orientation","Program Database"],ans:0,exp:"PDO = PHP Data Objects."};
-        core[45] = {cat:"Cookies",q:"Cookie SameSite: quelle valeur par défaut ?",opts:["Lax","Strict","None","Empty"],ans:0,exp:"SameSite=Lax récent navigateurs."};
-        core[88] = {cat:"Sessions",q:"session.gc_maxlifetime = ?",opts:["1440 secondes","24 minutes","1 heure","variable selon php.ini"],ans:0,exp:"1440 secondes par défaut (24 min)."};
-        core[120] = {cat:"Fichiers Texte",q:"Verrouillage exclusif avec flock ?",opts:["LOCK_EX","LOCK_SH","LOCK_UN","LOCK_NB"],ans:0,exp:"LOCK_EX pour écriture exclusive."};
-        core[199] = {cat:"BD / PDO",q:"Quelle méthode récupère toutes les lignes ?",opts:["fetchAll()","fetch()","fetchColumn()","fetchObject()"],ans:0,exp:"fetchAll() retourne tableau."};
-        core[255] = {cat:"File Upload",q:"Limite upload par défaut PHP ?",opts:["2 Mo","8 Mo","16 Mo","1 Mo"],ans:0,exp:"upload_max_filesize = 2M par défaut."};
-        return core.slice(0,300);
+        if (currentMode === 'wrong') {
+            filtered = filtered.filter(q => userAnswers[q.originalIdx] !== null && userAnswers[q.originalIdx] !== q.ans);
+        }
+        if (currentMode === 'unseen') {
+            filtered = filtered.filter(q => userAnswers[q.originalIdx] === null);
+        }
+        return filtered;
     }
-
-    // ---------- Fonctions UI ----------
-    function renderSidebarCategories() {
-        const catSet = new Set(questionsBank.map(q => q.cat));
+    
+    // Pagination : extraire la page courante
+    function getPaginatedQuestions() {
+        const filtered = getFilteredQuestions();
+        const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+        const start = (currentPage - 1) * ITEMS_PER_PAGE;
+        const paginated = filtered.slice(start, start + ITEMS_PER_PAGE);
+        return { paginated, totalPages, totalItems: filtered.length, startIndex: start };
+    }
+    
+    // Rendu des questions + pagination
+    function renderQuestionsAndPagination() {
+        const { paginated, totalPages, totalItems, startIndex } = getPaginatedQuestions();
+        const container = document.getElementById('questionsContainer');
+        
+        if (paginated.length === 0) {
+            container.innerHTML = `<div class="empty-zone"><i class="bi bi-inbox fs-1"></i><h5 class="mt-3">Aucune question</h5><p>Changer de filtre ou catégorie</p></div>`;
+            document.getElementById('paginationContainer').innerHTML = '';
+            return;
+        }
+        
+        let html = '';
+        const colorMap = {"Bases PHP":"primary","Cookies":"warning","Sessions":"success","Fichiers Texte":"info","BD / PDO":"danger","File Upload":"secondary"};
+        
+        paginated.forEach((q, idx) => {
+            const globalIdx = q.originalIdx;
+            const isAnswered = userAnswers[globalIdx] !== null;
+            const userChoice = userAnswers[globalIdx];
+            const correctAns = q.ans;
+            const catColor = colorMap[q.cat] || "secondary";
+            
+            html += `<div class="question-card" id="card-${globalIdx}">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
+                            <span class="cat-pill bg-${catColor} bg-opacity-10 text-${catColor}"><i class="bi bi-tag-fill"></i> ${q.cat}</span>
+                            ${isAnswered ? (userChoice === correctAns ? '<span class="badge bg-success"><i class="bi bi-check-circle"></i> Correcte</span>' : '<span class="badge bg-danger"><i class="bi bi-x-circle"></i> Erreur</span>') : '<span class="badge bg-secondary bg-opacity-50">À répondre</span>'}
+                        </div>
+                        <div class="fw-semibold fs-6 mb-3">${q.q}</div>
+                        <div>`;
+            
+            q.opts.forEach((opt, optIdx) => {
+                let extraClass = '';
+                if (isAnswered) {
+                    if (optIdx === correctAns) extraClass = 'option-correct';
+                    if (optIdx === userChoice && userChoice !== correctAns) extraClass = 'option-wrong';
+                }
+                html += `<div class="option-item ${extraClass} ${isAnswered ? 'disabled-opt' : ''}" onclick="${!isAnswered ? `answerQuestion(${globalIdx}, ${optIdx})` : ''}">
+                            <div class="opt-letter">${String.fromCharCode(65+optIdx)}</div>
+                            <div class="flex-grow-1">${opt}</div>
+                        </div>`;
+            });
+            
+            html += `</div><div class="explanation-text ${isAnswered ? 'show' : ''}"><i class="bi bi-lightbulb-fill text-warning me-1"></i> ${q.exp}</div></div>`;
+        });
+        
+        container.innerHTML = html;
+        
+        // Rendu pagination
+        let paginationHtml = `<div class="pagination-bar">
+            <button class="page-nav-btn" onclick="changePage(-1)" ${currentPage === 1 ? 'disabled' : ''}><i class="bi bi-chevron-left"></i> Précédent</button>`;
+        
+        // Afficher max 5 pages autour
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, startPage + 4);
+        if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
+        
+        for (let p = startPage; p <= endPage; p++) {
+            paginationHtml += `<button class="page-btn ${p === currentPage ? 'active-page' : ''}" onclick="goToPage(${p})">${p}</button>`;
+        }
+        
+        paginationHtml += `<span class="info-pagination">Page ${currentPage} / ${totalPages} (${totalItems} questions)</span>
+            <button class="page-nav-btn" onclick="changePage(1)" ${currentPage === totalPages ? 'disabled' : ''}>Suivant <i class="bi bi-chevron-right"></i></button>
+        </div>`;
+        document.getElementById('paginationContainer').innerHTML = paginationHtml;
+    }
+    
+    function changePage(delta) {
+        const filtered = getFilteredQuestions();
+        const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+        let newPage = currentPage + delta;
+        if (newPage < 1) newPage = 1;
+        if (newPage > totalPages) newPage = totalPages;
+        if (newPage !== currentPage) {
+            currentPage = newPage;
+            renderQuestionsAndPagination();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+    
+    function goToPage(page) {
+        const filtered = getFilteredQuestions();
+        const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+        if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+            renderQuestionsAndPagination();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+    
+    function answerQuestion(globalIdx, selectedOpt) {
+        if (userAnswers[globalIdx] !== null) return;
+        userAnswers[globalIdx] = selectedOpt;
+        updateStats();
+        // Re-rendu avec la même page pour voir l'explication
+        renderQuestionsAndPagination();
+        renderSidebar(); // mettre à jour les badges
+    }
+    
+    function updateStats() {
+        const totalAnswered = userAnswers.filter(a => a !== null).length;
+        const totalCorrect = userAnswers.filter((a,i) => a !== null && a === fullQuestions[i].ans).length;
+        const wrongCount = totalAnswered - totalCorrect;
+        document.getElementById('wrongCountSpan').innerText = wrongCount;
+        const percent = (totalAnswered / fullQuestions.length) * 100;
+        document.getElementById('globalProgressFill').style.width = percent + '%';
+        document.getElementById('scoreHeader').innerHTML = `${totalCorrect} / ${totalAnswered}`;
+    }
+    
+    function renderSidebar() {
+        const catSet = new Set(fullQuestions.map(q => q.cat));
         let cats = ['Toutes', ...Array.from(catSet).sort()];
         const container = document.getElementById('sidebarCatList');
         container.innerHTML = '';
         cats.forEach(cat => {
-            const total = cat === 'Toutes' ? questionsBank.length : questionsBank.filter(q => q.cat === cat).length;
-            const doneCount = cat === 'Toutes' ? userAnswers.filter(a => a !== null).length : questionsBank.filter((_, idx) => questionsBank[idx].cat === cat && userAnswers[idx] !== null).length;
-            const isActive = (currentCategory === cat);
+            const total = cat === 'Toutes' ? fullQuestions.length : fullQuestions.filter(q => q.cat === cat).length;
+            const doneCount = cat === 'Toutes' ? userAnswers.filter(a => a !== null).length : fullQuestions.filter((_, idx) => fullQuestions[idx].cat === cat && userAnswers[idx] !== null).length;
+            const activeClass = (currentCategory === cat) ? 'active' : '';
             container.innerHTML += `
-                <div class="cat-item-side ${isActive ? 'active' : ''}" data-cat="${cat.replace(/'/g, "\\'")}" onclick="selectCategory('${cat.replace(/'/g, "\\'")}')">
+                <div class="cat-item-side ${activeClass}" data-cat="${cat.replace(/'/g, "\\'")}" onclick="selectCategory('${cat.replace(/'/g, "\\'")}')">
                     <span><i class="bi bi-folder2-open me-1"></i> ${cat}</span>
                     <span class="cat-badge-side">${doneCount}/${total}</span>
                 </div>
             `;
         });
     }
-
+    
+    function selectCategory(cat) {
+        currentCategory = cat;
+        document.getElementById('currentCatTitle').innerHTML = cat === 'Toutes' ? '📚 Toutes les catégories' : `📁 ${cat}`;
+        currentPage = 1;
+        renderSidebar();
+        renderQuestionsAndPagination();
+        if (window.innerWidth < 768) toggleMobileSidebar(false);
+    }
+    
+    function setDisplayMode(mode) {
+        currentMode = mode;
+        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+        if (mode === 'all') document.querySelector('[data-mode="all"]')?.classList.add('active');
+        else if (mode === 'wrong') document.querySelector('[data-mode="wrong"]')?.classList.add('active');
+        else document.querySelector('[data-mode="unseen"]')?.classList.add('active');
+        currentPage = 1;
+        renderQuestionsAndPagination();
+        renderSidebar();
+    }
+    
     function filterSidebarCategories() {
         const search = document.getElementById('filterCatInput').value.toLowerCase();
         const items = document.querySelectorAll('.cat-item-side');
         items.forEach(item => {
             const txt = item.innerText.toLowerCase();
-            if(txt.includes(search)) item.style.display = 'flex';
-            else item.style.display = 'none';
+            item.style.display = txt.includes(search) ? 'flex' : 'none';
         });
     }
-
-    function selectCategory(cat) {
-        currentCategory = cat;
-        document.getElementById('currentCatTitle').innerHTML = cat === 'Toutes' ? '📚 Toutes les catégories' : `📁 ${cat}`;
-        renderSidebarCategories();
-        renderQuestions();
-        if(window.innerWidth < 768) {
-            document.getElementById('mobileSidebar').classList.remove('open');
-        }
-    }
-
-    function setDisplayMode(mode) {
-        currentMode = mode;
-        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-        if(mode === 'all') document.querySelector('[data-mode="all"]')?.classList.add('active');
-        else if(mode === 'wrong') document.querySelector('[data-mode="wrong"]')?.classList.add('active');
-        else document.querySelector('[data-mode="unseen"]')?.classList.add('active');
-        renderQuestions();
-    }
-
-    function answerQuestion(globalIdx, selectedOpt) {
-        if(userAnswers[globalIdx] !== null) return;
-        userAnswers[globalIdx] = selectedOpt;
-        updateStatsUI();
-        renderQuestions();  // rafraîchit l'affichage + explication
-        renderSidebarCategories();
-    }
-
-    function updateStatsUI() {
-        let totalAnswered = userAnswers.filter(a => a !== null).length;
-        let totalCorrect = userAnswers.filter((a,i) => a !== null && a === questionsBank[i].ans).length;
-        let wrongCount = userAnswers.filter((a,i) => a !== null && a !== questionsBank[i].ans).length;
-        document.getElementById('wrongCountSpan').innerText = wrongCount;
-        let percent = (totalAnswered / questionsBank.length) * 100;
-        document.getElementById('globalProgressFill').style.width = percent + '%';
-        document.getElementById('scoreHeader').innerHTML = `${totalCorrect} / ${totalAnswered}`;
-    }
-
-    function getFilteredQuestions() {
-        let filtered = questionsBank.map((q, idx) => ({...q, originalIdx: idx}));
-        if(currentCategory !== 'Toutes') filtered = filtered.filter(q => q.cat === currentCategory);
-        if(currentMode === 'wrong') filtered = filtered.filter(q => userAnswers[q.originalIdx] !== null && userAnswers[q.originalIdx] !== q.ans);
-        if(currentMode === 'unseen') filtered = filtered.filter(q => userAnswers[q.originalIdx] === null);
-        return filtered;
-    }
-
-    function renderQuestions() {
-        const filtered = getFilteredQuestions();
-        const container = document.getElementById('questionsContainer');
-        if(filtered.length === 0) {
-            container.innerHTML = `<div class="empty-zone"><i class="bi bi-emoji-neutral fs-1"></i><h5 class="mt-3">Aucune question</h5><p>Essayez un autre filtre ou catégorie</p></div>`;
-            return;
-        }
-        let html = '';
-        const colorCatMap = {"Bases PHP":"primary","Cookies":"warning","Sessions":"success","Fichiers Texte":"info","BD / PDO":"danger","File Upload":"secondary"};
-        filtered.forEach(q => {
-            const isAnswered = userAnswers[q.originalIdx] !== null;
-            const userChoice = userAnswers[q.originalIdx];
-            const correctAns = q.ans;
-            let catColor = colorCatMap[q.cat] || 'secondary';
-            html += `<div class="question-card" id="card-${q.originalIdx}">
-                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
-                            <span class="cat-pill bg-${catColor} bg-opacity-10 text-${catColor}"><i class="bi bi-tag"></i> ${q.cat}</span>
-                            ${isAnswered ? (userChoice === correctAns ? '<span class="badge bg-success"><i class="bi bi-check-lg"></i> Correcte</span>' : '<span class="badge bg-danger"><i class="bi bi-x-lg"></i> Erreur</span>') : '<span class="badge bg-secondary bg-opacity-50">À répondre</span>'}
-                        </div>
-                        <div class="fw-semibold fs-6 mb-3">${q.q}</div>
-                        <div>`;
-            q.opts.forEach((opt, idxOpt) => {
-                let extraClass = '';
-                let disabledAttr = isAnswered ? 'disabled' : '';
-                if(isAnswered) {
-                    if(idxOpt === correctAns) extraClass = 'option-correct';
-                    if(idxOpt === userChoice && userChoice !== correctAns) extraClass = 'option-wrong';
-                }
-                html += `<div class="option-item ${extraClass} ${isAnswered ? 'disabled-opt' : ''}" onclick="${!isAnswered ? `answerQuestion(${q.originalIdx}, ${idxOpt})` : ''}">
-                            <div class="opt-letter">${String.fromCharCode(65+idxOpt)}</div>
-                            <div class="flex-grow-1">${opt}</div>
-                        </div>`;
-            });
-            html += `</div><div class="explanation-text ${isAnswered ? 'show' : ''}"><i class="bi bi-info-circle-fill me-1 text-warning"></i> ${q.exp}</div></div>`;
-        });
-        container.innerHTML = html;
-        updateStatsUI();
-    }
-
+    
     function resetAllProgress() {
-        if(confirm("⚠️ Réinitialiser TOUTES les réponses ? Cette action efface votre progression.")) {
+        if (confirm("⚠️ Réinitialiser TOUTES les réponses ? Votre progression sera effacée.")) {
             userAnswers.fill(null);
-            updateStatsUI();
-            renderQuestions();
-            renderSidebarCategories();
+            updateStats();
+            renderQuestionsAndPagination();
+            renderSidebar();
         }
     }
-
-    function toggleMobileSidebar() {
+    
+    function toggleMobileSidebar(forceClose) {
         const sb = document.getElementById('mobileSidebar');
         sb.classList.toggle('open');
     }
-
-    // Fermeture clic en dehors pour mobile
+    
+    // Fermeture sidebar sur clic externe (mobile)
     document.addEventListener('click', function(e) {
-        let sidebar = document.getElementById('mobileSidebar');
-        let toggleBtn = document.getElementById('openSidebarBtn');
-        if(window.innerWidth < 768 && sidebar && sidebar.classList.contains('open')) {
-            if(!sidebar.contains(e.target) && !toggleBtn?.contains(e.target)) {
+        const sidebar = document.getElementById('mobileSidebar');
+        const toggleBtn = document.getElementById('openSidebarBtn');
+        if (window.innerWidth < 768 && sidebar && sidebar.classList.contains('open')) {
+            if (!sidebar.contains(e.target) && !toggleBtn?.contains(e.target)) {
                 sidebar.classList.remove('open');
             }
         }
     });
-
-    // initialisation
-    loadQuestionsFromJSON().then(() => {
-        // tout est prêt
-    });
+    
+    // Lancer l'application
+    init();
 </script>
 </body>
 </html>
