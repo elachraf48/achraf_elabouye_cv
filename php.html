@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>QCM PHP Pro — 300 questions avec pagination</title>
+    <title>QCM PHP - Chargement depuis JSON</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
@@ -25,7 +25,7 @@
             position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
             background: var(--sidebar-dark); color: var(--text-sidebar); z-index: 1100;
             transform: translateX(-100%); transition: transform 0.25s ease;
-            display: flex; flex-direction: column; overflow-y: auto; box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+            display: flex; flex-direction: column; overflow-y: auto;
         }
         #mobileSidebar.open { transform: translateX(0); }
         .sidebar-header { padding: 1.5rem 1.2rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -38,31 +38,29 @@
         .cat-item-side.active { background: var(--primary-light); color: white; }
         .cat-badge-side { background: rgba(255,255,255,0.2); border-radius: 30px; padding: 2px 8px; font-size: 0.7rem; }
 
-        /* MAIN */
         .main-content { min-height: 100vh; padding: 1rem; transition: all 0.2s; }
         @media (min-width: 768px) {
             .main-content { margin-left: 280px; padding: 1.5rem 2rem; }
             #mobileSidebar { transform: translateX(0); }
             .menu-icon-mobile { display: none; }
         }
-        .menu-icon-mobile { background: white; border: none; border-radius: 50%; width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        .menu-icon-mobile { background: white; border: none; border-radius: 50%; width: 42px; height: 42px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; }
         @media (max-width: 767px) { .menu-icon-mobile { display: inline-flex; } }
 
         .top-toolbar {
             position: sticky; top: 0; z-index: 1050; background: rgba(238,245,250,0.96); backdrop-filter: blur(8px);
             border-radius: 28px; padding: 0.65rem 1rem; margin-bottom: 1.5rem;
-            display: flex; flex-wrap: wrap; align-items: center; gap: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
         }
         .progress-wrapper { flex: 1; min-width: 100px; }
         .progress-custom { height: 8px; background: #cfdfed; border-radius: 12px; overflow: hidden; }
         .progress-fill { background: linear-gradient(90deg, var(--primary), var(--primary-light)); width: 0%; height: 100%; transition: width 0.3s; }
         .score-chip { background: white; border-radius: 60px; padding: 5px 15px; font-weight: 700; font-size: 0.8rem; }
         .mode-group { background: #e9f0f5; border-radius: 60px; padding: 4px; display: flex; gap: 4px; }
-        .mode-btn { border: none; background: transparent; padding: 5px 12px; border-radius: 30px; font-size: 0.72rem; font-weight: 600; }
+        .mode-btn { border: none; background: transparent; padding: 5px 12px; border-radius: 30px; font-size: 0.72rem; font-weight: 600; cursor: pointer; }
         .mode-btn.active { background: var(--primary); color: white; }
 
-        /* QUESTION CARD */
-        .question-card { background: var(--card-white); border-radius: 28px; padding: 1.5rem; margin-bottom: 1.2rem; border: 1px solid #e3edf5; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .question-card { background: var(--card-white); border-radius: 28px; padding: 1.5rem; margin-bottom: 1.2rem; border: 1px solid #e3edf5; }
         .cat-pill { font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 30px; display: inline-flex; align-items: center; gap: 6px; }
         .option-item { display: flex; align-items: center; gap: 12px; padding: 0.7rem 1rem; background: #fafdff; border: 1.5px solid #e2eef9; border-radius: 20px; margin-bottom: 0.6rem; cursor: pointer; transition: all 0.12s; }
         .option-item:hover:not(.disabled-opt) { background: #eef4fc; border-color: #8db3cc; }
@@ -72,146 +70,112 @@
         .explanation-text { background: #fdf7ea; border-left: 6px solid #e67e22; border-radius: 16px; padding: 0.8rem 1rem; margin-top: 1rem; font-size: 0.85rem; display: none; }
         .explanation-text.show { display: block; }
 
-        /* PAGINATION */
         .pagination-bar {
             background: white; border-radius: 60px; padding: 0.6rem 1rem; margin-top: 1.5rem;
             display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
-        .page-btn { background: #f0f4f9; border: none; border-radius: 40px; padding: 6px 14px; font-weight: 600; font-size: 0.8rem; transition: 0.1s; }
+        .page-btn { background: #f0f4f9; border: none; border-radius: 40px; padding: 6px 14px; font-weight: 600; font-size: 0.8rem; cursor: pointer; }
         .page-btn.active-page { background: var(--primary); color: white; }
-        .page-btn:hover:not(.active-page) { background: #dce5ef; }
-        .page-nav-btn { background: white; border: 1px solid #cbdbe0; border-radius: 40px; padding: 6px 16px; font-size: 0.8rem; }
-        .info-pagination { font-size: 0.75rem; color: #5a6874; margin: 0 8px; }
-
-        .empty-zone { background: white; border-radius: 48px; padding: 3rem 1rem; text-align: center; }
-        .footer-note { text-align: center; font-size: 0.7rem; margin-top: 2rem; opacity: 0.6; }
+        .page-nav-btn { background: white; border: 1px solid #cbdbe0; border-radius: 40px; padding: 6px 16px; font-size: 0.8rem; cursor: pointer; }
+        .page-nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .info-pagination { font-size: 0.75rem; color: #5a6874; }
+        .loading { text-align: center; padding: 3rem; }
+        .error-zone { background: #fff3cd; border-radius: 20px; padding: 2rem; text-align: center; }
     </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside id="mobileSidebar">
     <div class="sidebar-header">
-        <h4><i class="bi bi-database-fill-gear me-2"></i>QCM PHP</h4>
-        <small>300 questions • Certification</small>
+        <h4><i class="bi bi-database-fill-gear"></i> QCM PHP</h4>
+        <small>Chargement depuis JSON</small>
     </div>
     <div class="search-cat">
         <input type="text" id="filterCatInput" class="search-input-side" placeholder="🔍 Rechercher catégorie..." oninput="filterSidebarCategories()">
     </div>
     <div class="cat-list-scroll" id="sidebarCatList"></div>
     <div class="p-3 text-center opacity-50 small border-top border-light mt-2">
-        <i class="bi bi-mortarboard-fill"></i> ACHRAF ELABOUYE
+        <i class="bi bi-code-slash"></i> Fichier: qcm_php.json
     </div>
 </aside>
 
-<!-- MAIN CONTENT -->
-<div class="main-content" id="mainContent">
+<div class="main-content">
     <div class="top-toolbar">
         <button class="menu-icon-mobile" id="openSidebarBtn" onclick="toggleMobileSidebar()">
             <i class="bi bi-list"></i>
         </button>
-        <div class="fw-semibold text-truncate" id="currentCatTitle">📚 Toutes les catégories</div>
+        <div class="fw-semibold" id="currentCatTitle">📚 Toutes les catégories</div>
         <div class="progress-wrapper">
             <div class="progress-custom"><div class="progress-fill" id="globalProgressFill"></div></div>
         </div>
         <div class="score-chip" id="scoreHeader">0 / 0</div>
         <div class="mode-group">
-            <button class="mode-btn" data-mode="all" onclick="setDisplayMode('all')">📘 Tout</button>
-            <button class="mode-btn" data-mode="wrong" onclick="setDisplayMode('wrong')">❌ Erreurs <span id="wrongCountSpan" class="ms-1">0</span></button>
+            <button class="mode-btn active" data-mode="all" onclick="setDisplayMode('all')">📘 Tout</button>
+            <button class="mode-btn" data-mode="wrong" onclick="setDisplayMode('wrong')">❌ Erreurs <span id="wrongCountSpan">0</span></button>
             <button class="mode-btn" data-mode="unseen" onclick="setDisplayMode('unseen')">👁️ Non vues</button>
         </div>
-        <button class="btn btn-outline-danger btn-sm" onclick="resetAllProgress()"><i class="bi bi-arrow-repeat"></i> Reset</button>
+        <button class="btn btn-outline-danger btn-sm" onclick="resetAll()"><i class="bi bi-arrow-repeat"></i> Reset</button>
     </div>
 
-    <div id="questionsContainer"></div>
-    
-    <!-- PAGINATION ZONE -->
+    <div id="questionsContainer">
+        <div class="loading">
+            <div class="spinner-border text-primary mb-3" role="status"></div>
+            <p>Chargement des questions depuis qcm_php.json...</p>
+        </div>
+    </div>
     <div id="paginationContainer"></div>
-    
-    <div class="footer-note">
-        📁 300 questions PHP • Navigation par pages (10 questions/page) • Données intégrées
+    <div class="footer-note" style="text-align: center; font-size: 0.7rem; margin-top: 2rem; opacity: 0.6;">
+        📊 Questions chargées dynamiquement depuis le fichier JSON
     </div>
 </div>
 
 <script>
-    // ======================== GÉNÉRATION DES 300 QUESTIONS ========================
-    function generateFullQuestions() {
-        const categories = ["Bases PHP", "Cookies", "Sessions", "Fichiers Texte", "BD / PDO", "File Upload"];
-        const questions = [];
-        
-        // Template de questions de base variées
-        const templates = [
-            {cat:"Bases PHP",q:"PHP signifie :",opts:["Personal Home Page","PHP Hypertext Preprocessor","Professional Hypertext","Page Hypertext"],ans:1,exp:"PHP: Hypertext Preprocessor (acronyme récursif)."},
-            {cat:"Bases PHP",q:"Quelle balise PHP est correcte ?",opts:["<?php ?>","<php>","<% %>","<?="],ans:0,exp:"La balise standard est <?php ?>."},
-            {cat:"Bases PHP",q:"Comment afficher 'Hello' en PHP ?",opts:["echo 'Hello';","print('Hello');","printf('Hello');","Toutes ces réponses"],ans:3,exp:"echo, print, printf fonctionnent."},
-            {cat:"Bases PHP",q:"Variable en PHP commence par :",opts:["$","#","&","@"],ans:0,exp:"Toute variable commence par $."},
-            {cat:"Bases PHP",q:"Quel tableau contient les données GET ?",opts:["$_GET","$_POST","$_REQUEST","$_SERVER"],ans:0,exp:"$_GET récupère les paramètres d'URL."},
-            {cat:"Cookies",q:"setcookie() doit être appelé :",opts:["Avant tout affichage HTML","Après echo","N'importe où","Dans le footer"],ans:0,exp:"Les cookies sont des en-têtes HTTP."},
-            {cat:"Cookies",q:"Accéder à un cookie en PHP :",opts:["$_COOKIE['nom']","$_SESSION['nom']","$_GET['nom']","$_POST['nom']"],ans:0,exp:"Superglobale $_COOKIE."},
-            {cat:"Cookies",q:"Supprimer un cookie :",opts:["setcookie('nom','',time()-3600)","unset($_COOKIE['nom'])","delete_cookie()","cookie_remove()"],ans:0,exp:"Expiration passée."},
-            {cat:"Sessions",q:"Démarrer une session :",opts:["session_start()","session_begin()","start_session()","session_open()"],ans:0,exp:"session_start() avant tout output."},
-            {cat:"Sessions",q:"Détruire une session :",opts:["session_destroy()","session_unset()","session_end()","session_kill()"],ans:0,exp:"session_destroy() supprime les données serveur."},
-            {cat:"Sessions",q:"$_SESSION est :",opts:["Un tableau superglobal","Une constante","Une fonction","Un objet"],ans:0,exp:"Tableau associatif stocké côté serveur."},
-            {cat:"Fichiers Texte",q:"Ouvrir fichier en lecture :",opts:["fopen('f.txt','r')","fopen('f.txt','w')","open('r')","fread()"],ans:0,exp:"mode 'r' = read."},
-            {cat:"Fichiers Texte",q:"Fermer fichier :",opts:["fclose($handle)","close($handle)","fcloseall()","file_close()"],ans:0,exp:"Libère la ressource."},
-            {cat:"Fichiers Texte",q:"Écrire sans écraser :",opts:["mode 'a'","mode 'w'","mode 'x'","mode 'r+'"],ans:0,exp:"Append preserve contenu."},
-            {cat:"BD / PDO",q:"Prévention injection SQL :",opts:["Requêtes préparées","addslashes","htmlspecialchars","trim"],ans:0,exp:"PDO prepare/execute."},
-            {cat:"BD / PDO",q:"PDO::FETCH_ASSOC retourne :",opts:["Tableau associatif","Objet stdClass","Tableau numérique","Chaîne"],ans:0,exp:"Clés = noms colonnes."},
-            {cat:"BD / PDO",q:"Connexion PDO :",opts:["new PDO('mysql:host=localhost;dbname=test','root','')","mysql_connect()","mysqli_connect()","pdo_connect()"],ans:0,exp:"DSN + user + mdp."},
-            {cat:"File Upload",q:"Attribut formulaire pour upload :",opts:["enctype='multipart/form-data'","method='GET'","accept='image'","enctype='text'"],ans:0,exp:"Obligatoire pour fichiers."},
-            {cat:"File Upload",q:"Déplacer fichier uploadé :",opts:["move_uploaded_file()","copy_upload()","save_file()","upload_move()"],ans:0,exp:"Déplace du temporaire vers destination."},
-            {cat:"File Upload",q:"Superglobale upload :",opts:["$_FILES","$_UPLOAD","$_FILE_DATA","$_POST_FILES"],ans:0,exp:"Contient name, tmp_name, error, size."},
-        ];
-        
-        // Générer 300 questions en alternant catégories et templates
-        for (let i = 0; i < 300; i++) {
-            const template = templates[i % templates.length];
-            const catIndex = i % categories.length;
-            const category = categories[catIndex];
-            // Varier légèrement le texte pour éviter la monotonie
-            let questionText = template.q;
-            if (i >= templates.length) {
-                const variation = Math.floor(i / templates.length);
-                questionText = template.q + ` (variante ${variation})`;
-            }
-            const optsCopy = [...template.opts];
-            questions.push({
-                id: i,
-                cat: category,
-                q: questionText,
-                opts: optsCopy,
-                ans: template.ans,
-                exp: template.exp + (i > 100 ? " [rappel]" : "")
-            });
-        }
-        
-        // Correction manuelle pour enrichir certaines questions spécifiques
-        questions[45] = {...questions[45], q: "Qu'est-ce que SameSite dans les cookies ?", opts: ["Attribut de sécurité","Nouvelle méthode PHP","Type de session","Framework"], ans:0, exp:"SameSite protège contre CSRF."};
-        questions[99] = {...questions[99], q: "session.gc_maxlifetime par défaut ?", opts: ["1440 secondes","3600 secondes","24 heures","1800 secondes"], ans:0, exp:"1440 secondes (24 minutes) avant garbage collector."};
-        questions[150] = {...questions[150], q: "Que retourne file_get_contents() ?", opts: ["Le contenu du fichier","true/false","Ressource","Nombre d'octets"], ans:0, exp:"Retourne une chaîne ou false."};
-        questions[220] = {...questions[220], q: "Que signifie CRUD ?", opts: ["Create, Read, Update, Delete","Connect, Run, Update, Drop","Code, Read, Use, Delete","Create, Restore, Upgrade, Delete"], ans:0, exp:"Opérations de base en BD."};
-        return questions;
-    }
-
-    // ======================== ÉTAT GLOBAL ========================
+    // État global
     let fullQuestions = [];
     let userAnswers = [];
-    let currentMode = 'all';      // 'all', 'wrong', 'unseen'
+    let currentMode = 'all';
     let currentCategory = 'Toutes';
     let currentPage = 1;
     const ITEMS_PER_PAGE = 10;
+    let isLoading = true;
     
-    // Initialisation
-    function init() {
-        fullQuestions = generateFullQuestions();
+    // Chargement du fichier JSON
+    async function loadQuestions() {
+        try {
+            const response = await fetch('./qcm_php.json');
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status} - Fichier non trouvé`);
+            }
+            const data = await response.json();
+            
+            if (Array.isArray(data) && data.length > 0) {
+                fullQuestions = data.map((q, idx) => ({ ...q, id: idx }));
+                console.log(`✅ ${fullQuestions.length} questions chargées depuis qcm_php.json`);
+            } else {
+                throw new Error('Le fichier JSON est vide ou mal formaté');
+            }
+        } catch (error) {
+            console.error('Erreur de chargement:', error);
+            document.getElementById('questionsContainer').innerHTML = `
+                <div class="error-zone">
+                    <i class="bi bi-exclamation-triangle-fill fs-1 text-warning"></i>
+                    <h3 class="mt-3">Fichier JSON non trouvé</h3>
+                    <p>Assurez-vous que le fichier <strong>qcm_php.json</strong> est présent dans le même dossier que cette page.</p>
+                    <hr>
+                    <p class="text-muted small">Format attendu : tableau d'objets avec les propriétés :<br>
+                    cat, q, opts (tableau), ans (index 0-3), exp</p>
+                </div>
+            `;
+            isLoading = false;
+            return;
+        }
+        
         userAnswers = new Array(fullQuestions.length).fill(null);
+        isLoading = false;
         renderSidebar();
-        renderQuestionsAndPagination();
-        updateStats();
+        render();
     }
     
-    // Filtrage des questions selon mode + catégorie
     function getFilteredQuestions() {
         let filtered = fullQuestions.map((q, idx) => ({ ...q, originalIdx: idx }));
         if (currentCategory !== 'Toutes') {
@@ -226,80 +190,103 @@
         return filtered;
     }
     
-    // Pagination : extraire la page courante
-    function getPaginatedQuestions() {
+    function render() {
+        if (isLoading) return;
+        
         const filtered = getFilteredQuestions();
         const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
         if (currentPage < 1) currentPage = 1;
         if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+        
         const start = (currentPage - 1) * ITEMS_PER_PAGE;
         const paginated = filtered.slice(start, start + ITEMS_PER_PAGE);
-        return { paginated, totalPages, totalItems: filtered.length, startIndex: start };
-    }
-    
-    // Rendu des questions + pagination
-    function renderQuestionsAndPagination() {
-        const { paginated, totalPages, totalItems, startIndex } = getPaginatedQuestions();
-        const container = document.getElementById('questionsContainer');
         
+        // Mise à jour des stats
+        const totalAnswered = userAnswers.filter(a => a !== null).length;
+        const totalCorrect = userAnswers.filter((a,i) => a !== null && a === fullQuestions[i]?.ans).length;
+        const wrongCount = totalAnswered - totalCorrect;
+        
+        document.getElementById('globalProgressFill').style.width = (totalAnswered / fullQuestions.length * 100) + '%';
+        document.getElementById('scoreHeader').innerHTML = `${totalCorrect} / ${totalAnswered}`;
+        document.getElementById('wrongCountSpan').innerHTML = wrongCount;
+        
+        // Rendu des questions
+        const container = document.getElementById('questionsContainer');
         if (paginated.length === 0) {
-            container.innerHTML = `<div class="empty-zone"><i class="bi bi-inbox fs-1"></i><h5 class="mt-3">Aucune question</h5><p>Changer de filtre ou catégorie</p></div>`;
+            container.innerHTML = `<div class="empty-zone text-center p-5 bg-white rounded-4"><i class="bi bi-inbox fs-1"></i><h5 class="mt-3">Aucune question</h5><p>Changez de filtre ou catégorie</p></div>`;
             document.getElementById('paginationContainer').innerHTML = '';
             return;
         }
         
-        let html = '';
-        const colorMap = {"Bases PHP":"primary","Cookies":"warning","Sessions":"success","Fichiers Texte":"info","BD / PDO":"danger","File Upload":"secondary"};
+        const colorMap = {
+            "Bases PHP": "primary", "Cookies": "warning", "Sessions": "success",
+            "Fichiers Texte": "info", "BD / PDO": "danger", "File Upload": "secondary"
+        };
         
-        paginated.forEach((q, idx) => {
-            const globalIdx = q.originalIdx;
-            const isAnswered = userAnswers[globalIdx] !== null;
-            const userChoice = userAnswers[globalIdx];
-            const correctAns = q.ans;
+        let html = '';
+        for (let q of paginated) {
+            const isAnswered = userAnswers[q.originalIdx] !== null;
+            const userChoice = userAnswers[q.originalIdx];
             const catColor = colorMap[q.cat] || "secondary";
             
-            html += `<div class="question-card" id="card-${globalIdx}">
-                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
-                            <span class="cat-pill bg-${catColor} bg-opacity-10 text-${catColor}"><i class="bi bi-tag-fill"></i> ${q.cat}</span>
-                            ${isAnswered ? (userChoice === correctAns ? '<span class="badge bg-success"><i class="bi bi-check-circle"></i> Correcte</span>' : '<span class="badge bg-danger"><i class="bi bi-x-circle"></i> Erreur</span>') : '<span class="badge bg-secondary bg-opacity-50">À répondre</span>'}
-                        </div>
-                        <div class="fw-semibold fs-6 mb-3">${q.q}</div>
-                        <div>`;
+            html += `<div class="question-card">
+                <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                    <span class="cat-pill bg-${catColor} bg-opacity-10 text-${catColor}">
+                        <i class="bi bi-tag"></i> ${q.cat}
+                    </span>
+                    ${isAnswered ? (userChoice === q.ans ? '<span class="badge bg-success">✓ Correct</span>' : '<span class="badge bg-danger">✗ Faux</span>') : '<span class="badge bg-secondary">À répondre</span>'}
+                </div>
+                <div class="fw-semibold fs-6 mb-3">${escapeHtml(q.q)}</div>
+                <div>`;
             
-            q.opts.forEach((opt, optIdx) => {
+            for (let oi = 0; oi < q.opts.length; oi++) {
                 let extraClass = '';
                 if (isAnswered) {
-                    if (optIdx === correctAns) extraClass = 'option-correct';
-                    if (optIdx === userChoice && userChoice !== correctAns) extraClass = 'option-wrong';
+                    if (oi === q.ans) extraClass = 'option-correct';
+                    if (oi === userChoice && userChoice !== q.ans) extraClass = 'option-wrong';
                 }
-                html += `<div class="option-item ${extraClass} ${isAnswered ? 'disabled-opt' : ''}" onclick="${!isAnswered ? `answerQuestion(${globalIdx}, ${optIdx})` : ''}">
-                            <div class="opt-letter">${String.fromCharCode(65+optIdx)}</div>
-                            <div class="flex-grow-1">${opt}</div>
-                        </div>`;
-            });
+                const letter = String.fromCharCode(65 + oi);
+                html += `<div class="option-item ${extraClass} ${isAnswered ? 'disabled-opt' : ''}" onclick="${!isAnswered ? `answer(${q.originalIdx}, ${oi})` : ''}">
+                    <div class="opt-letter">${letter}</div>
+                    <div>${escapeHtml(q.opts[oi])}</div>
+                </div>`;
+            }
             
-            html += `</div><div class="explanation-text ${isAnswered ? 'show' : ''}"><i class="bi bi-lightbulb-fill text-warning me-1"></i> ${q.exp}</div></div>`;
-        });
-        
+            html += `</div><div class="explanation-text ${isAnswered ? 'show' : ''}"><i class="bi bi-lightbulb text-warning me-1"></i> ${escapeHtml(q.exp)}</div></div>`;
+        }
         container.innerHTML = html;
         
-        // Rendu pagination
-        let paginationHtml = `<div class="pagination-bar">
-            <button class="page-nav-btn" onclick="changePage(-1)" ${currentPage === 1 ? 'disabled' : ''}><i class="bi bi-chevron-left"></i> Précédent</button>`;
+        // Pagination
+        let pagHtml = `<div class="pagination-bar">
+            <button class="page-nav-btn" onclick="changePage(-1)" ${currentPage === 1 ? 'disabled' : ''}>◀ Précédent</button>`;
         
-        // Afficher max 5 pages autour
-        let startPage = Math.max(1, currentPage - 2);
-        let endPage = Math.min(totalPages, startPage + 4);
-        if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
-        
-        for (let p = startPage; p <= endPage; p++) {
-            paginationHtml += `<button class="page-btn ${p === currentPage ? 'active-page' : ''}" onclick="goToPage(${p})">${p}</button>`;
+        const maxVisible = 7;
+        for (let p = 1; p <= Math.min(totalPages, maxVisible); p++) {
+            pagHtml += `<button class="page-btn ${p === currentPage ? 'active-page' : ''}" onclick="goToPage(${p})">${p}</button>`;
         }
+        if (totalPages > maxVisible) pagHtml += `<span class="info-pagination">...</span>`;
         
-        paginationHtml += `<span class="info-pagination">Page ${currentPage} / ${totalPages} (${totalItems} questions)</span>
-            <button class="page-nav-btn" onclick="changePage(1)" ${currentPage === totalPages ? 'disabled' : ''}>Suivant <i class="bi bi-chevron-right"></i></button>
+        pagHtml += `<span class="info-pagination">Page ${currentPage} / ${totalPages} (${filtered.length} questions)</span>
+            <button class="page-nav-btn" onclick="changePage(1)" ${currentPage === totalPages ? 'disabled' : ''}>Suivant ▶</button>
         </div>`;
-        document.getElementById('paginationContainer').innerHTML = paginationHtml;
+        document.getElementById('paginationContainer').innerHTML = pagHtml;
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    function answer(globalIdx, optIdx) {
+        if (userAnswers[globalIdx] !== null) return;
+        userAnswers[globalIdx] = optIdx;
+        render();
+        renderSidebar();
     }
     
     function changePage(delta) {
@@ -310,114 +297,87 @@
         if (newPage > totalPages) newPage = totalPages;
         if (newPage !== currentPage) {
             currentPage = newPage;
-            renderQuestionsAndPagination();
+            render();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
     
     function goToPage(page) {
-        const filtered = getFilteredQuestions();
-        const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-        if (page >= 1 && page <= totalPages) {
-            currentPage = page;
-            renderQuestionsAndPagination();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    }
-    
-    function answerQuestion(globalIdx, selectedOpt) {
-        if (userAnswers[globalIdx] !== null) return;
-        userAnswers[globalIdx] = selectedOpt;
-        updateStats();
-        // Re-rendu avec la même page pour voir l'explication
-        renderQuestionsAndPagination();
-        renderSidebar(); // mettre à jour les badges
-    }
-    
-    function updateStats() {
-        const totalAnswered = userAnswers.filter(a => a !== null).length;
-        const totalCorrect = userAnswers.filter((a,i) => a !== null && a === fullQuestions[i].ans).length;
-        const wrongCount = totalAnswered - totalCorrect;
-        document.getElementById('wrongCountSpan').innerText = wrongCount;
-        const percent = (totalAnswered / fullQuestions.length) * 100;
-        document.getElementById('globalProgressFill').style.width = percent + '%';
-        document.getElementById('scoreHeader').innerHTML = `${totalCorrect} / ${totalAnswered}`;
-    }
-    
-    function renderSidebar() {
-        const catSet = new Set(fullQuestions.map(q => q.cat));
-        let cats = ['Toutes', ...Array.from(catSet).sort()];
-        const container = document.getElementById('sidebarCatList');
-        container.innerHTML = '';
-        cats.forEach(cat => {
-            const total = cat === 'Toutes' ? fullQuestions.length : fullQuestions.filter(q => q.cat === cat).length;
-            const doneCount = cat === 'Toutes' ? userAnswers.filter(a => a !== null).length : fullQuestions.filter((_, idx) => fullQuestions[idx].cat === cat && userAnswers[idx] !== null).length;
-            const activeClass = (currentCategory === cat) ? 'active' : '';
-            container.innerHTML += `
-                <div class="cat-item-side ${activeClass}" data-cat="${cat.replace(/'/g, "\\'")}" onclick="selectCategory('${cat.replace(/'/g, "\\'")}')">
-                    <span><i class="bi bi-folder2-open me-1"></i> ${cat}</span>
-                    <span class="cat-badge-side">${doneCount}/${total}</span>
-                </div>
-            `;
-        });
-    }
-    
-    function selectCategory(cat) {
-        currentCategory = cat;
-        document.getElementById('currentCatTitle').innerHTML = cat === 'Toutes' ? '📚 Toutes les catégories' : `📁 ${cat}`;
-        currentPage = 1;
-        renderSidebar();
-        renderQuestionsAndPagination();
-        if (window.innerWidth < 768) toggleMobileSidebar(false);
+        currentPage = page;
+        render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
     function setDisplayMode(mode) {
         currentMode = mode;
-        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-        if (mode === 'all') document.querySelector('[data-mode="all"]')?.classList.add('active');
-        else if (mode === 'wrong') document.querySelector('[data-mode="wrong"]')?.classList.add('active');
-        else document.querySelector('[data-mode="unseen"]')?.classList.add('active');
         currentPage = 1;
-        renderQuestionsAndPagination();
+        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+        if (mode === 'all') document.querySelector('[data-mode="all"]').classList.add('active');
+        if (mode === 'wrong') document.querySelector('[data-mode="wrong"]').classList.add('active');
+        if (mode === 'unseen') document.querySelector('[data-mode="unseen"]').classList.add('active');
+        render();
         renderSidebar();
+    }
+    
+    function resetAll() {
+        if (confirm('Réinitialiser toutes les réponses ? Cette action est définitive.')) {
+            userAnswers.fill(null);
+            render();
+            renderSidebar();
+        }
+    }
+    
+    function renderSidebar() {
+        if (fullQuestions.length === 0) return;
+        const catSet = new Set(fullQuestions.map(q => q.cat));
+        const cats = ['Toutes', ...Array.from(catSet).sort()];
+        const container = document.getElementById('sidebarCatList');
+        container.innerHTML = '';
+        
+        for (let cat of cats) {
+            const total = cat === 'Toutes' ? fullQuestions.length : fullQuestions.filter(q => q.cat === cat).length;
+            const done = cat === 'Toutes' ? userAnswers.filter(a => a !== null).length : fullQuestions.filter((_,i) => fullQuestions[i].cat === cat && userAnswers[i] !== null).length;
+            const active = currentCategory === cat ? 'active' : '';
+            container.innerHTML += `<div class="cat-item-side ${active}" onclick="selectCategory('${cat.replace(/'/g, "\\'")}')">
+                <span><i class="bi bi-folder2-open me-1"></i> ${cat}</span>
+                <span class="cat-badge-side">${done}/${total}</span>
+            </div>`;
+        }
+    }
+    
+    function selectCategory(cat) {
+        currentCategory = cat;
+        currentPage = 1;
+        document.getElementById('currentCatTitle').innerHTML = cat === 'Toutes' ? '📚 Toutes les catégories' : `📁 ${cat}`;
+        renderSidebar();
+        render();
+        if (window.innerWidth < 768) toggleMobileSidebar();
     }
     
     function filterSidebarCategories() {
         const search = document.getElementById('filterCatInput').value.toLowerCase();
-        const items = document.querySelectorAll('.cat-item-side');
-        items.forEach(item => {
+        document.querySelectorAll('.cat-item-side').forEach(item => {
             const txt = item.innerText.toLowerCase();
             item.style.display = txt.includes(search) ? 'flex' : 'none';
         });
     }
     
-    function resetAllProgress() {
-        if (confirm("⚠️ Réinitialiser TOUTES les réponses ? Votre progression sera effacée.")) {
-            userAnswers.fill(null);
-            updateStats();
-            renderQuestionsAndPagination();
-            renderSidebar();
-        }
+    function toggleMobileSidebar() {
+        document.getElementById('mobileSidebar').classList.toggle('open');
     }
     
-    function toggleMobileSidebar(forceClose) {
-        const sb = document.getElementById('mobileSidebar');
-        sb.classList.toggle('open');
-    }
-    
-    // Fermeture sidebar sur clic externe (mobile)
     document.addEventListener('click', function(e) {
         const sidebar = document.getElementById('mobileSidebar');
-        const toggleBtn = document.getElementById('openSidebarBtn');
-        if (window.innerWidth < 768 && sidebar && sidebar.classList.contains('open')) {
-            if (!sidebar.contains(e.target) && !toggleBtn?.contains(e.target)) {
+        const btn = document.getElementById('openSidebarBtn');
+        if (window.innerWidth < 768 && sidebar?.classList.contains('open')) {
+            if (!sidebar.contains(e.target) && !btn?.contains(e.target)) {
                 sidebar.classList.remove('open');
             }
         }
     });
     
-    // Lancer l'application
-    init();
+    // Démarrage
+    loadQuestions();
 </script>
 </body>
 </html>
