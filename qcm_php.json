@@ -1,0 +1,667 @@
+[
+  {
+    "cat": "Bases PHP",
+    "q": "PHP est un langage de programmation ?",
+    "opts": ["Côté client", "Côté serveur", "Côté navigateur", "Côté base de données"],
+    "ans": 1,
+    "exp": "PHP est exécuté sur le serveur web (Apache, Nginx, etc.) avant d'envoyer le résultat au navigateur."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que signifie l'acronyme PHP ?",
+    "opts": ["Personal Home Page", "PHP Hypertext Preprocessor", "Professional Hypertext Processor", "Pre Hypertext Processor"],
+    "ans": 1,
+    "exp": "PHP est un acronyme récursif : PHP: Hypertext Preprocessor."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle est la balise correcte pour ouvrir un bloc PHP ?",
+    "opts": ["<?php", "<php>", "<%", "<?="],
+    "ans": 0,
+    "exp": "La balise standard est <?php. <?= est un raccourci pour echo."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment afficher du texte en PHP ?",
+    "opts": ["echo 'Texte';", "print('Texte');", "printf('Texte');", "Toutes ces réponses"],
+    "ans": 3,
+    "exp": "echo, print et printf sont tous valides pour afficher du texte."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quel symbole est utilisé pour déclarer une variable ?",
+    "opts": ["#", "$", "@", "&"],
+    "ans": 1,
+    "exp": "Toutes les variables en PHP commencent par le symbole $."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction affiche le type et la valeur d'une variable ?",
+    "opts": ["echo()", "print_r()", "var_dump()", "var_export()"],
+    "ans": 2,
+    "exp": "var_dump() affiche les informations détaillées d'une variable."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment écrire un commentaire sur une ligne ?",
+    "opts": ["/* commentaire */", "// commentaire", "<!-- commentaire -->", "# commentaire"],
+    "ans": 1,
+    "exp": "// et # sont utilisés pour les commentaires sur une ligne."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment écrire un commentaire multiligne ?",
+    "opts": ["// commentaire //", "/* commentaire */", "# commentaire #", "<!-- commentaire -->"],
+    "ans": 1,
+    "exp": "/* */ est utilisé pour les commentaires sur plusieurs lignes."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle est l'extension d'un fichier PHP ?",
+    "opts": [".html", ".php", ".ph", ".phtml"],
+    "ans": 1,
+    "exp": "Les fichiers PHP ont généralement l'extension .php."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle version de PHP a introduit la programmation orientée objet ?",
+    "opts": ["PHP 4", "PHP 5", "PHP 7", "PHP 8"],
+    "ans": 1,
+    "exp": "PHP 5 (2004) a introduit le modèle objet complet."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle est la dernière version majeure de PHP ?",
+    "opts": ["PHP 7", "PHP 8", "PHP 9", "PHP 10"],
+    "ans": 1,
+    "exp": "PHP 8 est la dernière version majeure (sortie en novembre 2020)."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quel serveur web est le plus utilisé avec PHP ?",
+    "opts": ["IIS", "Nginx", "Apache", "Tomcat"],
+    "ans": 2,
+    "exp": "Apache est le serveur web le plus populaire pour PHP."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que signifie WAMP ?",
+    "opts": ["Windows Apache MySQL PHP", "Web Apache MySQL PHP", "Windows Apache MariaDB Python", "Web Application Management Protocol"],
+    "ans": 0,
+    "exp": "WAMP = Windows + Apache + MySQL + PHP."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que signifie XAMPP ?",
+    "opts": ["X Windows Apache MySQL PHP Perl", "Cross-Platform Apache MariaDB PHP Perl", "X Apache MySQL PHP Python", "XAM Apache MySQL PHP Perl"],
+    "ans": 1,
+    "exp": "XAMPP = Cross-platform + Apache + MariaDB + PHP + Perl."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quel est le port par défaut d'Apache ?",
+    "opts": ["8080", "80", "443", "3306"],
+    "ans": 1,
+    "exp": "Apache utilise le port 80 par défaut pour HTTP."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quel est le port par défaut de MySQL ?",
+    "opts": ["3306", "5432", "1433", "27017"],
+    "ans": 0,
+    "exp": "MySQL utilise le port 3306 par défaut."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment accéder à un projet en local ?",
+    "opts": ["http://localhost/projet", "file:///C:/projet", "http://127.0.0.1:8080", "https://localhost/projet"],
+    "ans": 0,
+    "exp": "http://localhost/nom_du_dossier est l'URL standard."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quel dossier contient les projets sous XAMPP ?",
+    "opts": ["/xampp/bin", "/xampp/htdocs", "/xampp/www", "/xampp/projects"],
+    "ans": 1,
+    "exp": "htdocs est la racine du serveur web sous XAMPP."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "PHP est un langage typé ?",
+    "opts": ["Typage fort uniquement", "Typage faible uniquement", "Typage faible avec typage fort optionnel", "Non typé"],
+    "ans": 2,
+    "exp": "PHP supporte le typage faible par défaut mais peut utiliser declare(strict_types=1)."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que fait l'opérateur . (point) en PHP ?",
+    "opts": ["Multiplication", "Concaténation", "Addition", "Soustraction"],
+    "ans": 1,
+    "exp": "Le point est l'opérateur de concaténation de chaînes."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment terminer une instruction en PHP ?",
+    "opts": [".", ";", ":", "} "],
+    "ans": 1,
+    "exp": "Chaque instruction PHP doit se terminer par un point-virgule."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que fait la fonction isset() ?",
+    "opts": ["Vérifie si une variable existe", "Supprime une variable", "Crée une variable", "Affiche une variable"],
+    "ans": 0,
+    "exp": "isset() retourne true si la variable existe et n'est pas null."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que fait la fonction empty() ?",
+    "opts": ["Vérifie si une variable est vide", "Vide une variable", "Supprime une variable", "Crée une variable vide"],
+    "ans": 0,
+    "exp": "empty() retourne true pour '', 0, null, false, []."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle est la différence entre == et === ?",
+    "opts": ["Aucune différence", "== compare la valeur, === compare la valeur et le type", "=== compare la valeur, == compare le type", "== compare les références"],
+    "ans": 1,
+    "exp": "=== est l'opérateur d'égalité stricte (valeur et type)."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que retourne 1 == '1' ?",
+    "opts": ["true", "false", "Erreur", "null"],
+    "ans": 0,
+    "exp": "PHP convertit la chaîne '1' en entier avant comparaison."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que retourne 1 === '1' ?",
+    "opts": ["true", "false", "Erreur", "null"],
+    "ans": 1,
+    "exp": "=== vérifie que les types sont identiques (int vs string)."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction convertit une chaîne en minuscules ?",
+    "opts": ["strtoupper()", "strtolower()", "ucfirst()", "lcfirst()"],
+    "ans": 1,
+    "exp": "strtolower() convertit une chaîne en minuscules."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction convertit une chaîne en majuscules ?",
+    "opts": ["strtoupper()", "strtolower()", "ucfirst()", "lcfirst()"],
+    "ans": 0,
+    "exp": "strtoupper() convertit une chaîne en majuscules."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction obtient la longueur d'une chaîne ?",
+    "opts": ["str_length()", "strlen()", "length()", "sizeof()"],
+    "ans": 1,
+    "exp": "strlen() retourne le nombre d'octets d'une chaîne."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction compte les éléments d'un tableau ?",
+    "opts": ["count()", "length()", "sizeof()", "count() et sizeof()"],
+    "ans": 3,
+    "exp": "count() et sizeof() sont équivalents pour les tableaux."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quel type de tableau PHP utilise des clés numériques ?",
+    "opts": ["Tableau associatif", "Tableau indexé", "Tableau multidimensionnel", "Tableau mixte"],
+    "ans": 1,
+    "exp": "Les tableaux indexés utilisent des clés numériques (0,1,2...)."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quel type de tableau PHP utilise des clés nommées ?",
+    "opts": ["Tableau associatif", "Tableau indexé", "Tableau numérique", "Tableau constant"],
+    "ans": 0,
+    "exp": "Les tableaux associatifs utilisent des clés sous forme de chaînes."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment déclarer une constante en PHP ?",
+    "opts": ["define()", "const", "Les deux", "constant()"],
+    "ans": 2,
+    "exp": "define('NOM', valeur) ou const NOM = valeur."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Une constante peut-elle être modifiée après sa définition ?",
+    "opts": ["Oui", "Non", "Uniquement avec define()", "Uniquement avec const"],
+    "ans": 1,
+    "exp": "Les constantes sont immuables une fois définies."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que fait la fonction include() ?",
+    "opts": ["Inclut un fichier", "Inclut un fichier et stoppe si erreur", "Inclut un fichier une seule fois", "Exécute un fichier"],
+    "ans": 0,
+    "exp": "include() inclut et évalue le fichier spécifié."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Différence entre include et require ?",
+    "opts": ["Aucune différence", "require stoppe le script si fichier absent", "include stoppe le script", "require génère une notice"],
+    "ans": 1,
+    "exp": "require génère une erreur fatale si le fichier n'existe pas."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Différence entre include_once et include ?",
+    "opts": ["Aucune", "include_once inclut une seule fois", "include_once est plus rapide", "include_once vérifie la syntaxe"],
+    "ans": 1,
+    "exp": "include_once évite les inclusions multiples du même fichier."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que fait la superglobale $_SERVER ?",
+    "opts": ["Informations sur le serveur", "Données de formulaire", "Variables d'environnement", "Cookies"],
+    "ans": 0,
+    "exp": "$_SERVER contient des informations sur l'environnement serveur."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que contient $_SERVER['REMOTE_ADDR'] ?",
+    "opts": ["IP du serveur", "IP du client", "Nom du serveur", "Port du serveur"],
+    "ans": 1,
+    "exp": "REMOTE_ADDR contient l'adresse IP du client."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que contient $_SERVER['REQUEST_METHOD'] ?",
+    "opts": ["GET", "POST", "La méthode HTTP utilisée", "Le chemin de la requête"],
+    "ans": 2,
+    "exp": "REQUEST_METHOD retourne GET, POST, PUT, DELETE, etc."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle version de PHP a introduit les attributs ?",
+    "opts": ["PHP 7", "PHP 8", "PHP 5.6", "PHP 8.1"],
+    "ans": 1,
+    "exp": "Les attributs (annotations) sont apparus avec PHP 8."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Qu'est-ce que PHP-FPM ?",
+    "opts": ["Un framework PHP", "Un gestionnaire de processus FastCGI", "Un éditeur PHP", "Un débogueur PHP"],
+    "ans": 1,
+    "exp": "PHP-FPM (FastCGI Process Manager) améliore les performances."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction exécute une commande système ?",
+    "opts": ["exec()", "shell_exec()", "system()", "Toutes ces réponses"],
+    "ans": 3,
+    "exp": "Plusieurs fonctions permettent d'exécuter des commandes système."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment générer un nombre aléatoire en PHP ?",
+    "opts": ["rand()", "mt_rand()", "random_int()", "Toutes ces réponses"],
+    "ans": 3,
+    "exp": "Plusieurs fonctions existent pour la génération aléatoire."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction arrondit un nombre ?",
+    "opts": ["round()", "ceil()", "floor()", "Toutes ces réponses"],
+    "ans": 3,
+    "exp": "round() arrondit, ceil() monte, floor() descend."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que fait la fonction date() ?",
+    "opts": ["Affiche la date", "Formate une date", "Crée une date", "Convertit une date"],
+    "ans": 1,
+    "exp": "date() formate la date et l'heure actuelles."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que retourne time() ?",
+    "opts": ["La date courante", "Le timestamp Unix actuel", "L'heure courante", "Le temps d'exécution"],
+    "ans": 1,
+    "exp": "time() retourne le nombre de secondes depuis le 1/1/1970."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment créer un tableau en PHP ?",
+    "opts": ["array()", "[]", "Les deux", "new Array()"],
+    "ans": 2,
+    "exp": "Les syntaxes array() et [] sont toutes deux valides."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment ajouter un élément à la fin d'un tableau ?",
+    "opts": ["array_push()", "$tab[] = valeur", "Les deux", "array_add()"],
+    "ans": 2,
+    "exp": "Les deux méthodes sont valides pour ajouter en fin de tableau."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment supprimer le dernier élément d'un tableau ?",
+    "opts": ["array_pop()", "array_shift()", "unset()", "array_remove()"],
+    "ans": 0,
+    "exp": "array_pop() supprime et retourne le dernier élément."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Où sont stockés les cookies ?",
+    "opts": ["Sur le serveur", "Dans le navigateur du client", "Dans la base de données", "Dans les fichiers logs"],
+    "ans": 1,
+    "exp": "Les cookies sont stockés localement dans le navigateur."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Quelle fonction PHP crée un cookie ?",
+    "opts": ["set_cookie()", "setcookie()", "cookie_create()", "new_cookie()"],
+    "ans": 1,
+    "exp": "setcookie() est la fonction standard pour créer un cookie."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Comment accéder à un cookie en PHP ?",
+    "opts": ["$_COOKIE", "$_SESSION", "$_GET", "$_POST"],
+    "ans": 0,
+    "exp": "Les cookies sont accessibles via la superglobale $_COOKIE."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Comment supprimer un cookie ?",
+    "opts": ["delete_cookie()", "setcookie() avec expiration passée", "unset($_COOKIE)", "cookie_destroy()"],
+    "ans": 1,
+    "exp": "Pour supprimer un cookie, on le crée avec une date d'expiration passée."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Quel paramètre rend un cookie accessible uniquement via HTTPS ?",
+    "opts": ["httponly", "secure", "samesite", "domain"],
+    "ans": 1,
+    "exp": "secure=true signifie que le cookie n'est envoyé qu'en HTTPS."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Quel paramètre empêche l'accès JavaScript au cookie ?",
+    "opts": ["httponly", "secure", "samesite", "domain"],
+    "ans": 0,
+    "exp": "httponly protège contre les attaques XSS."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Quelle est la taille maximale recommandée pour un cookie ?",
+    "opts": ["1KB", "4KB", "8KB", "1MB"],
+    "ans": 1,
+    "exp": "La plupart des navigateurs limitent les cookies à 4KB."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Quel attribut protège contre les attaques CSRF ?",
+    "opts": ["httponly", "secure", "samesite", "domain"],
+    "ans": 2,
+    "exp": "SameSite protège contre les requêtes cross-site forgées."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Un cookie peut-il stocker un tableau ?",
+    "opts": ["Oui directement", "Non, seulement des chaînes", "Oui avec serialize()", "Oui avec json_encode()"],
+    "ans": 2,
+    "exp": "Il faut sérialiser le tableau avant de le stocker."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Quelle fonction démarre une session PHP ?",
+    "opts": ["session_begin()", "session_start()", "start_session()", "init_session()"],
+    "ans": 1,
+    "exp": "session_start() doit être appelée avant tout affichage."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Où sont stockées les données de session ?",
+    "opts": ["Côté client", "Côté serveur", "Dans les cookies", "Dans la base de données"],
+    "ans": 1,
+    "exp": "Les sessions stockent les données sur le serveur."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Comment détruire une session ?",
+    "opts": ["session_destroy()", "session_unset()", "unset($_SESSION)", "session_end()"],
+    "ans": 0,
+    "exp": "session_destroy() supprime toutes les données de session."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Comment stocker une valeur en session ?",
+    "opts": ["$_SESSION['key'] = 'value'", "session_set('key', 'value')", "session_register('key', 'value')", "session_add('key', 'value')"],
+    "ans": 0,
+    "exp": "$_SESSION est un tableau associatif."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Qu'est-ce que PHPSESSID ?",
+    "opts": ["Le nom par défaut du cookie de session", "L'ID de session", "La fonction de session", "Le fichier de session"],
+    "ans": 0,
+    "exp": "PHPSESSID est le nom par défaut du cookie contenant l'ID de session."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Comment changer l'ID de session ?",
+    "opts": ["session_id()", "session_regenerate_id()", "session_create_id()", "session_new_id()"],
+    "ans": 1,
+    "exp": "session_regenerate_id() crée un nouvel ID pour la session."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Quelle fonction ouvre un fichier en PHP ?",
+    "opts": ["fopen()", "open()", "file_open()", "open_file()"],
+    "ans": 0,
+    "exp": "fopen() ouvre un fichier ou une URL."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Quel mode d'ouverture permet de lire un fichier ?",
+    "opts": ["r", "w", "a", "x"],
+    "ans": 0,
+    "exp": "Le mode 'r' ouvre le fichier en lecture seule."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Quel mode d'ouverture écrase le contenu existant ?",
+    "opts": ["r", "w", "a", "r+"],
+    "ans": 1,
+    "exp": "Le mode 'w' écrase le fichier s'il existe."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Quel mode d'ouverture ajoute à la fin du fichier ?",
+    "opts": ["r", "w", "a", "x"],
+    "ans": 2,
+    "exp": "Le mode 'a' (append) ajoute à la fin du fichier."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Quelle fonction lit le contenu d'un fichier ?",
+    "opts": ["fread()", "fgets()", "file_get_contents()", "Toutes ces réponses"],
+    "ans": 3,
+    "exp": "Plusieurs fonctions permettent de lire des fichiers."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Quelle fonction écrit dans un fichier ?",
+    "opts": ["fwrite()", "fputs()", "file_put_contents()", "Toutes ces réponses"],
+    "ans": 3,
+    "exp": "Plusieurs fonctions permettent d'écrire dans des fichiers."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Quelle fonction ferme un fichier ?",
+    "opts": ["fclose()", "close()", "file_close()", "fend()"],
+    "ans": 0,
+    "exp": "fclose() ferme le pointeur de fichier."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Comment vérifier si un fichier existe ?",
+    "opts": ["file_exists()", "is_file()", "Les deux", "exist()"],
+    "ans": 2,
+    "exp": "file_exists() et is_file() vérifient l'existence."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Comment supprimer un fichier ?",
+    "opts": ["unlink()", "delete()", "remove()", "rm()"],
+    "ans": 0,
+    "exp": "unlink() supprime un fichier."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Comment renommer un fichier ?",
+    "opts": ["rename()", "move()", "change_name()", "mv()"],
+    "ans": 0,
+    "exp": "rename() permet de renommer ou déplacer un fichier."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Que signifie PDO ?",
+    "opts": ["PHP Data Objects", "PHP Database Objects", "Personal Data Objects", "PHP Data Organization"],
+    "ans": 0,
+    "exp": "PDO est une interface d'accès aux bases de données."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Combien de SGBDR PDO supporte-t-il ?",
+    "opts": ["5", "7", "12", "Plus de 12"],
+    "ans": 3,
+    "exp": "PDO supporte plus de 12 SGBDR différents."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Quelle méthode PDO exécute une requête SELECT ?",
+    "opts": ["exec()", "query()", "execute()", "select()"],
+    "ans": 1,
+    "exp": "query() exécute une requête et retourne un jeu de résultats."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Quelle méthode PDO exécute INSERT/UPDATE/DELETE ?",
+    "opts": ["exec()", "query()", "execute()", "run()"],
+    "ans": 0,
+    "exp": "exec() retourne le nombre de lignes affectées."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Comment se connecter à MySQL avec PDO ?",
+    "opts": ["new PDO('mysql:host=localhost;dbname=test', 'user', 'pass')", "PDO::connect('mysql', 'localhost', 'test')", "new PDO('mysql', 'localhost', 'test')", "PDO::mysql('localhost', 'test')"],
+    "ans": 0,
+    "exp": "Le DSN contient le type, l'hôte et le nom de la base."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Comment récupérer toutes les lignes d'un résultat ?",
+    "opts": ["fetch()", "fetchAll()", "fetchRow()", "getAll()"],
+    "ans": 1,
+    "exp": "fetchAll() retourne un tableau contenant toutes les lignes."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "PDO::FETCH_ASSOC retourne :",
+    "opts": ["Tableau associatif", "Tableau indexé", "Objet", "Tableau mixte"],
+    "ans": 0,
+    "exp": "Les clés sont les noms des colonnes."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "PDO::FETCH_OBJ retourne :",
+    "opts": ["Tableau", "Objet", "Chaîne", "Entier"],
+    "ans": 1,
+    "exp": "Les propriétés de l'objet sont les noms des colonnes."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Comment préparer une requête avec PDO ?",
+    "opts": ["prepare()", "prepared()", "prep()", "prepareStatement()"],
+    "ans": 0,
+    "exp": "prepare() retourne un objet PDOStatement."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Comment lier des paramètres dans une requête préparée ?",
+    "opts": ["bindParam()", "bindValue()", "Dans execute()", "Toutes ces réponses"],
+    "ans": 3,
+    "exp": "Plusieurs méthodes permettent de lier des paramètres."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Quel attribut est obligatoire pour l'upload de fichiers ?",
+    "opts": ["method='POST'", "enctype='multipart/form-data'", "Les deux", "accept='file'"],
+    "ans": 2,
+    "exp": "method='POST' et enctype='multipart/form-data' sont requis."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Quelle superglobale contient les fichiers uploadés ?",
+    "opts": ["$_POST", "$_GET", "$_FILES", "$_UPLOAD"],
+    "ans": 2,
+    "exp": "$_FILES contient toutes les informations sur les fichiers uploadés."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Que contient $_FILES['fichier']['name'] ?",
+    "opts": ["Le nom temporaire", "Le nom original", "Le type MIME", "La taille"],
+    "ans": 1,
+    "exp": "name contient le nom original du fichier sur l'ordinateur client."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Que contient $_FILES['fichier']['tmp_name'] ?",
+    "opts": ["Le nom original", "Le nom temporaire sur le serveur", "Le chemin de destination", "Le type MIME"],
+    "ans": 1,
+    "exp": "tmp_name est le chemin temporaire où PHP a stocké le fichier."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Quelle fonction déplace un fichier uploadé ?",
+    "opts": ["move_uploaded_file()", "copy()", "rename()", "upload_file()"],
+    "ans": 0,
+    "exp": "move_uploaded_file() vérifie que le fichier est bien un upload."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Quel code d'erreur signifie 'Aucune erreur' ?",
+    "opts": ["0", "1", "2", "4"],
+    "ans": 0,
+    "exp": "UPLOAD_ERR_OK (0) indique que l'upload a réussi."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Quel code d'erreur signifie 'Fichier trop volumineux' ?",
+    "opts": ["UPLOAD_ERR_INI_SIZE", "UPLOAD_ERR_FORM_SIZE", "UPLOAD_ERR_PARTIAL", "UPLOAD_ERR_NO_FILE"],
+    "ans": 0,
+    "exp": "Le fichier dépasse upload_max_filesize dans php.ini."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Quelle est la taille maximale par défaut d'un upload ?",
+    "opts": ["1MB", "2MB", "8MB", "16MB"],
+    "ans": 1,
+    "exp": "upload_max_filesize = 2M par défaut."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Comment limiter les types de fichiers acceptés ?",
+    "opts": ["Vérifier l'extension", "Vérifier le type MIME", "Utiliser finfo_file()", "Toutes ces réponses"],
+    "ans": 3,
+    "exp": "Une validation complète est nécessaire pour la sécurité."
+  },
+  {
+    "cat": "File Upload",
+    "q": "Pourquoi ne pas faire confiance à $_FILES['fichier']['type'] ?",
+    "opts": ["Il peut être falsifié", "Il n'est pas toujours présent", "Il est en lecture seule", "Il est toujours vide"],
+    "ans": 0,
+    "exp": "Le type MIME est envoyé par le client et peut être modifié."
+  }
+]
