@@ -142,7 +142,7 @@
   {
     "cat": "Bases PHP",
     "q": "Comment terminer une instruction en PHP ?",
-    "opts": [".", ";", ":", "} "],
+    "opts": [".", ";", ":", "}"],
     "ans": 1,
     "exp": "Chaque instruction PHP doit se terminer par un point-virgule."
   },
@@ -350,6 +350,69 @@
     "exp": "array_pop() supprime et retourne le dernier élément."
   },
   {
+    "cat": "Bases PHP",
+    "q": "Comment supprimer le premier élément d'un tableau ?",
+    "opts": ["array_pop()", "array_shift()", "unset()", "array_remove()"],
+    "ans": 1,
+    "exp": "array_shift() supprime et retourne le premier élément."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction trie un tableau dans l'ordre croissant ?",
+    "opts": ["rsort()", "sort()", "asort()", "ksort()"],
+    "ans": 1,
+    "exp": "sort() trie un tableau par valeurs croissantes."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction trie un tableau dans l'ordre décroissant ?",
+    "opts": ["rsort()", "sort()", "asort()", "ksort()"],
+    "ans": 0,
+    "exp": "rsort() trie un tableau par valeurs décroissantes."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction mélange aléatoirement un tableau ?",
+    "opts": ["rand_array()", "shuffle()", "randomize()", "mix()"],
+    "ans": 1,
+    "exp": "shuffle() mélange les éléments d'un tableau."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que fait la fonction in_array() ?",
+    "opts": ["Vérifie si une valeur existe dans un tableau", "Ajoute une valeur", "Supprime une valeur", "Trie un tableau"],
+    "ans": 0,
+    "exp": "in_array() recherche une valeur dans un tableau."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Que fait la fonction array_key_exists() ?",
+    "opts": ["Vérifie si une clé existe", "Vérifie si une valeur existe", "Ajoute une clé", "Supprime une clé"],
+    "ans": 0,
+    "exp": "array_key_exists() vérifie l'existence d'une clé dans un tableau."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Comment fusionner deux tableaux ?",
+    "opts": ["array_merge()", "array_combine()", "array_join()", "array_concat()"],
+    "ans": 0,
+    "exp": "array_merge() fusionne un ou plusieurs tableaux."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction retourne la différence entre deux tableaux ?",
+    "opts": ["array_diff()", "array_intersect()", "array_compare()", "array_filter()"],
+    "ans": 0,
+    "exp": "array_diff() calcule la différence entre des tableaux."
+  },
+  {
+    "cat": "Bases PHP",
+    "q": "Quelle fonction retourne l'intersection de deux tableaux ?",
+    "opts": ["array_diff()", "array_intersect()", "array_compare()", "array_filter()"],
+    "ans": 1,
+    "exp": "array_intersect() calcule l'intersection de tableaux."
+  },
+  {
     "cat": "Cookies",
     "q": "Où sont stockés les cookies ?",
     "opts": ["Sur le serveur", "Dans le navigateur du client", "Dans la base de données", "Dans les fichiers logs"],
@@ -413,6 +476,69 @@
     "exp": "Il faut sérialiser le tableau avant de le stocker."
   },
   {
+    "cat": "Cookies",
+    "q": "Quelle est la durée de vie d'un cookie sans paramètre d'expiration ?",
+    "opts": ["1 heure", "1 jour", "Session (fermeture navigateur)", "Permanent"],
+    "ans": 2,
+    "exp": "Un cookie sans expiration est appelé 'cookie de session'."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Que signifie SameSite=None ?",
+    "opts": ["Cookie envoyé partout", "Cookie bloqué", "Cookie uniquement même site", "Cookie uniquement HTTPS"],
+    "ans": 0,
+    "exp": "SameSite=None permet l'envoi du cookie en cross-site."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Que signifie SameSite=Lax ?",
+    "opts": ["Cookie envoyé pour la navigation normale", "Cookie totalement bloqué", "Cookie uniquement HTTPS", "Cookie session"],
+    "ans": 0,
+    "exp": "Lax autorise les cookies pour les liens et les requêtes de navigation."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Que signifie SameSite=Strict ?",
+    "opts": ["Cookie jamais envoyé en cross-site", "Cookie toujours envoyé", "Cookie uniquement HTTPS", "Cookie session"],
+    "ans": 0,
+    "exp": "Strict bloque tous les cookies cross-site."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Comment définir le domaine d'un cookie ?",
+    "opts": ["domain='exemple.com'", "path='/", "secure=true", "httponly=true"],
+    "ans": 0,
+    "exp": "Le paramètre domain définit pour quels domaines le cookie est valide."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Comment définir le chemin d'un cookie ?",
+    "opts": ["domain='exemple.com'", "path='/admin'", "secure=true", "httponly=true"],
+    "ans": 1,
+    "exp": "Le paramètre path définit le chemin URL où le cookie est valide."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Quel est le nombre maximum de cookies par domaine ?",
+    "opts": ["20", "50", "100", "Illimité"],
+    "ans": 1,
+    "exp": "La plupart des navigateurs limitent à 50 cookies par domaine."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Peut-on lire un cookie httponly avec JavaScript ?",
+    "opts": ["Oui", "Non", "Uniquement en HTTPS", "Uniquement en local"],
+    "ans": 1,
+    "exp": "httponly empêche totalement l'accès JavaScript."
+  },
+  {
+    "cat": "Cookies",
+    "q": "Quand un cookie secure est-il envoyé ?",
+    "opts": ["Uniquement en HTTP", "Uniquement en HTTPS", "Dans les deux", "Jamais"],
+    "ans": 1,
+    "exp": "secure=true n'envoie le cookie qu'en HTTPS."
+  },
+  {
     "cat": "Sessions",
     "q": "Quelle fonction démarre une session PHP ?",
     "opts": ["session_begin()", "session_start()", "start_session()", "init_session()"],
@@ -453,6 +579,41 @@
     "opts": ["session_id()", "session_regenerate_id()", "session_create_id()", "session_new_id()"],
     "ans": 1,
     "exp": "session_regenerate_id() crée un nouvel ID pour la session."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Comment obtenir l'ID de session courant ?",
+    "opts": ["session_id()", "session_get_id()", "session_current_id()", "id()"],
+    "ans": 0,
+    "exp": "session_id() retourne l'ID de session actuel."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Comment fermer une session sans la détruire ?",
+    "opts": ["session_close()", "session_write_close()", "session_end()", "session_stop()"],
+    "ans": 1,
+    "exp": "session_write_close() écrit les données et ferme la session."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Quelle est la durée de vie par défaut d'une session ?",
+    "opts": ["24 minutes", "1 heure", "24 heures", "Permanent"],
+    "ans": 0,
+    "exp": "La valeur par défaut de session.gc_maxlifetime est 1440 secondes."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Que fait session_unset() ?",
+    "opts": ["Détruit la session", "Vide toutes les variables de session", "Ferme la session", "Sauvegarde la session"],
+    "ans": 1,
+    "exp": "session_unset() libère toutes les variables de session."
+  },
+  {
+    "cat": "Sessions",
+    "q": "Peut-on stocker un objet en session ?",
+    "opts": ["Oui, automatiquement", "Non", "Oui, si l'objet est sérialisable", "Uniquement des tableaux"],
+    "ans": 2,
+    "exp": "PHP sérialise automatiquement les objets stockés en session."
   },
   {
     "cat": "Fichiers",
@@ -525,6 +686,41 @@
     "exp": "rename() permet de renommer ou déplacer un fichier."
   },
   {
+    "cat": "Fichiers",
+    "q": "Comment copier un fichier ?",
+    "opts": ["copy()", "cp()", "duplicate()", "clone()"],
+    "ans": 0,
+    "exp": "copy() copie un fichier."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Comment obtenir la taille d'un fichier ?",
+    "opts": ["filesize()", "size()", "file_size()", "get_size()"],
+    "ans": 0,
+    "exp": "filesize() retourne la taille du fichier en octets."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Comment obtenir la date de dernière modification d'un fichier ?",
+    "opts": ["filemtime()", "filectime()", "fileatime()", "mod_time()"],
+    "ans": 0,
+    "exp": "filemtime() retourne l'heure de dernière modification."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Comment lire un fichier CSV ?",
+    "opts": ["fgetcsv()", "freadcsv()", "csv_read()", "parse_csv()"],
+    "ans": 0,
+    "exp": "fgetcsv() lit une ligne CSV et la convertit en tableau."
+  },
+  {
+    "cat": "Fichiers",
+    "q": "Quelle fonction verrouille un fichier ?",
+    "opts": ["flock()", "lock()", "file_lock()", "f_lock()"],
+    "ans": 0,
+    "exp": "flock() permet de verrouiller un fichier."
+  },
+  {
     "cat": "BD / PDO",
     "q": "Que signifie PDO ?",
     "opts": ["PHP Data Objects", "PHP Database Objects", "Personal Data Objects", "PHP Data Organization"],
@@ -593,6 +789,55 @@
     "opts": ["bindParam()", "bindValue()", "Dans execute()", "Toutes ces réponses"],
     "ans": 3,
     "exp": "Plusieurs méthodes permettent de lier des paramètres."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Que fait bindParam() ?",
+    "opts": ["Lie une variable par référence", "Lie une valeur", "Exécute la requête", "Prépare la requête"],
+    "ans": 0,
+    "exp": "bindParam() lie une variable par référence au paramètre."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Que fait bindValue() ?",
+    "opts": ["Lie une variable par référence", "Lie une valeur", "Exécute la requête", "Prépare la requête"],
+    "ans": 1,
+    "exp": "bindValue() lie une valeur au paramètre."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Comment obtenir le dernier ID inséré ?",
+    "opts": ["lastInsertId()", "lastId()", "insertId()", "getId()"],
+    "ans": 0,
+    "exp": "lastInsertId() retourne l'ID de la dernière ligne insérée."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Comment gérer les erreurs PDO ?",
+    "opts": ["try/catch", "errorInfo()", "errorCode()", "Toutes ces réponses"],
+    "ans": 3,
+    "exp": "PDO propose plusieurs mécanismes de gestion d'erreurs."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Que fait beginTransaction() ?",
+    "opts": ["Démarre une transaction", "Valide une transaction", "Annule une transaction", "Ferme la connexion"],
+    "ans": 0,
+    "exp": "beginTransaction() désactive l'autocommit pour une transaction."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Que fait commit() ?",
+    "opts": ["Démarre une transaction", "Valide une transaction", "Annule une transaction", "Ferme la connexion"],
+    "ans": 1,
+    "exp": "commit() valide les modifications d'une transaction."
+  },
+  {
+    "cat": "BD / PDO",
+    "q": "Que fait rollBack() ?",
+    "opts": ["Démarre une transaction", "Valide une transaction", "Annule une transaction", "Ferme la connexion"],
+    "ans": 2,
+    "exp": "rollBack() annule toutes les modifications de la transaction."
   },
   {
     "cat": "File Upload",
